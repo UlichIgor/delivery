@@ -1,0 +1,79 @@
+
+a.nav-link {
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: calc(9px + 0.625vw);
+  line-height: calc(11px + 1.135417vh);
+  color: $greys;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+}
+
+a.Phone.nav-link {
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: calc(9px + 0.625vw);
+  line-height: calc(11px + 1.135417vh);
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  color: $white;
+}
+
+.Shop {
+  position: absolute;
+  top: 7%;
+  right: 12%;
+  width: 40px;
+  height: 40px;
+  color: $white;
+  z-index: z("Shop");
+
+}
+@include media-breakpoint-down(sm){
+  .Circle__box.nav-link{
+    width: 100%;
+    padding: 18px 0;
+  }
+ 
+}
+.Shop {
+  color: $white;
+ 
+}
+.Shop:hover {
+  color: $accent2;
+  transform: scale(1.2);
+}
+
+.Shop.active {
+  color: $accent;
+}
+
+.Circle__box{
+  position: relative;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items:flex-end;
+  width: 16%;
+}
+span.Circle{
+ display: flex;
+  align-items: center;
+  justify-content: center;
+  align-items: center; 
+  position: absolute;
+  top: -14px;
+  right: 12%;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: red;
+  z-index: z('cart');
+  color:$white;
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: calc(9px + 0.625vw);
+}

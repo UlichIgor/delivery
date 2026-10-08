@@ -1,0 +1,243 @@
+.Empty {
+  position: absolute;
+  top: 8%;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 80%;
+  text-align: center;
+  background: $fon;
+  padding: 35px 0 55px;
+  border-radius: 10px;
+  z-index: z("empty");
+}
+
+@include media-breakpoint-down(xl) {
+  .Empty {
+    width: 65%;
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .Empty {
+    width: 75%;
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .Empty {
+    width: 85%;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .Empty {
+    width: 95%;
+  }
+}
+
+.Empty h6 {
+  position: relative;
+  top: 0;
+  left: 0;
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: calc(9px + 0.625vw);
+  line-height: calc(11px + 4.135417vh);
+  color: $white;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+  width: 100%;
+  font-size: calc(12px + 0.625vw);
+}
+
+.Empty p {
+  position: relative;
+  top: 0;
+  left: 0;
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: calc(9px + 0.625vw);
+  line-height: calc(11px + 4.135417vh);
+  color: $greys;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  background: $fon;
+}
+
+.Shop__body {
+  position: absolute;
+  top: 65px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 33%;
+
+  background-color: $fon;
+  z-index: z("cart");
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+}
+.Shop__content {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+@include media-breakpoint-down(xl) {
+  .Shop__body {
+    min-width: 65%;
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .Shop__body {
+    min-width: 75%;
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .Shop__body {
+    min-width: 85%;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .Shop__body {
+    min-width: 95%;
+  }
+}
+
+.Item {
+  display: flex;
+  position: relative;
+  top: 0;
+  left: 0;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 12px 4px 0;
+  max-height: 120px;
+  width: 100%;
+  border: 1px solid #000000;
+  z-index: z("item");
+}
+#root > div.Shop__body > div > div > img {
+  position: relative;
+  top: 0;
+  left: 0;
+  max-height: 110px;
+  padding: 5px;
+  border-radius: 10px;
+  width: 15%;
+}
+#root > div.Shop__body > div > div > h4 {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 55%;
+  max-width: 380px;
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: calc(9px + 0.625vw);
+  line-height: calc(11px + 2.135417vh);
+  color: $greys;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  text-transform: capitalize;
+}
+#root > div.Shop__body > div > div > b {
+  font-weight: 400;
+  font-style: italic;
+  color: $white;
+  padding-right: 2%;
+}
+
+.shopCounter {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: space-around;
+  width: 15%;
+}
+#minus {
+  position: relative;
+  top: 0;
+  left: 0;
+  background: transparent;
+  border: none;
+  color: $accent;
+  font-weight: bold;
+  background: $bg;
+  padding: 0 6px;
+}
+#plus {
+  position: relative;
+  top: 0;
+  left: 0;
+  background: transparent;
+  border: none;
+  color: $accent;
+  font-weight: bold;
+  background: $bg;
+  padding: 0 6px;
+}
+#root > div.Shop__body > div > div > svg > path {
+  width: 5%;
+  z-index: z("path");
+  cursor: pointer;
+}
+
+.Dellete {
+  position: relative;
+  top: 0;
+  left: 0;
+  margin: 10px 10px 10px 30px;
+  color: $greys;
+  z-index: z("dell");
+  &:hover {
+    transform: translateY(-5px) scale(1.2);
+    font-weight: 700;
+    color: $accent2;
+  }
+}
+
+#root > div.Shop__body > div > div > div > h5 {
+  color: $accent;
+  font-weight: bold;
+  position: relative;
+  top: 5px;
+  left: 0;
+  padding: 0 6px;
+  background: $bg;
+}
+.ResultPanel {
+  position: relative;
+  top: 0;
+  left: 0;
+  padding: 0 0 0 7px;
+
+}
+.value {
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: calc(9px + 0.625vw);
+  line-height: calc(11px + 4.135417vh);
+  color: $white;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+button.lightBtn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: 200;
+  font-size: calc(9px + 0.625vw);
+  line-height: calc(11px + 2.135417vh);
+  color: $white;
+}

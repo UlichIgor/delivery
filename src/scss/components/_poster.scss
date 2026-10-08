@@ -1,0 +1,111 @@
+.container-fluid.Poster {
+  padding: 0;
+}
+.d-block.w-100{
+  position: relative;
+  top: 0;
+  left: 0;
+}
+img.d-block.w-100{
+  position: relative;
+  top: 0;
+  left: 0;
+  max-height: 720px;
+}
+@include media-breakpoint-down(sm){
+  img.d-block.w-100{
+    min-height: 320px;
+  } 
+}
+.PosterBlock.carousel-caption {
+  position: absolute;
+  top: 5%;
+  right: 0;
+  bottom: 0rem;
+  left: 5%;
+  max-width: 990px;
+  padding-top: 0rem;
+  padding-bottom: 0rem;
+  color: #fff;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+@include media-breakpoint-down(sm){
+  .PosterBlock.carousel-caption{
+    top: 0%;
+    padding: 9% 0;
+  }
+}
+.Poster__title {
+  position: relative;
+  top: 0;
+  left: 0;
+ 
+ 
+}
+.Poster__title h3 {
+  position: relative;
+  top: 0;
+  left: 0;
+  font-family: serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: calc(14px + 1.625vw);
+  line-height: calc(27px + 4.135417vh);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-align: left;
+  color: $white;
+}
+.Poster__descr {
+  position: relative;
+  top: 0;
+  left: 0;
+  
+}
+.Poster__descr p {
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: calc(10px + 1.025vw);
+  line-height: calc(11px + 4.135417vh);
+  color: $greys;
+  opacity: 0.6;
+  text-align: left;
+}
+button.Poster__btn.btn-light {
+  border: 1px solid $accent;
+  position: relative;
+  left: 0;
+  top: 12%;
+  border-radius: 80px;
+  max-width: 275px;
+  height: 60px;
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: calc(10px + 1.025vw);
+  line-height: calc(11px + 0.135417vh);
+  text-align: center;
+  color: $white;
+  background: $fon;
+  &:hover {
+    box-shadow: -10px 0px 13px -7px $black, 10px 0px 13px -7px $black, 5px 5px 15px 5px rgba(255, 108, 26, 0.45);
+  }
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  display: none;
+}
+@include media-breakpoint-down(sm){
+  .carousel-indicators {
+    display: none;
+  }
+}
+
+@include media-breakpoint-down(sm){
+  button.Poster__btn.btn-light{
+    display: none;
+  }
+}
