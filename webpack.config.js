@@ -1,102 +1,102 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+/* eslint-env node */
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+
+const isProduction = process.env.NODE_ENV === "production";
 
 module.exports = {
+  mode: isProduction ? "production" : "development",
   bail: true,
-  mode: 'development',
-  devtool: 'inline-source-map',
-  context: path.resolve(__dirname, 'src'),
-  entry: {
-    main: path.resolve(__dirname, './src/index.jsx'),
-  },
+  devtool: isProduction ? false : "eval-cheap-module-source-map",
+  context: path.resolve(__dirname, "src"),
+  entry: path.resolve(__dirname, "src/index.jsx"),
   output: {
-    path: path.resolve(__dirname, 'build'),
-    filename: '[name].js',
+    path: path.resolve(__dirname, "build"),
+    filename: isProduction ? "static/js/[name].[contenthash:8].js" : "static/js/[name].js",
+    chunkFilename: isProduction
+      ? "static/js/[name].[contenthash:8].chunk.js"
+      : "static/js/[name].chunk.js",
+    assetModuleFilename: "static/media/[name].[hash][ext][query]",
+    publicPath: "/",
     clean: true,
   },
-  devServer: {
-    compress: true,
-    open: true,
-    static: {
-      directory: path.join(__dirname, 'build'),
+  resolve: {
+    extensions: [".js", ".jsx", ".json", ".css", ".scss"],
+    alias: {
+      "@": path.resolve(__dirname, "src"),
     },
   },
-  performance: {
-    hints: 'warning',
-    maxEntrypointSize: 512000,
-    maxAssetSize: 512000
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env", "@babel/preset-react"],
+          },
+        },
+      },
+      {
+        test: /\.(css|sass|scss)$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+      },
+      {
+        test: /\.(png|jpe?g|gif|webp|svg)$/i,
+        type: "asset",
+        parser: {
+          dataUrlCondition: {
+            maxSize: 8 * 1024,
+          },
+        },
+        generator: {
+          filename: "static/media/[name].[hash][ext][query]",
+        },
+      },
+      {
+        test: /\.(woff2?|ttf|eot)$/i,
+        type: "asset/resource",
+        generator: {
+          filename: "static/fonts/[name].[hash][ext][query]",
+        },
+      },
+    ],
   },
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: __dirname + '/public/index.html',
-      filename: 'index.html',
+      template: path.resolve(__dirname, "public/index.html"),
+      filename: "index.html",
+      inject: "body",
+      favicon: path.resolve(__dirname, "public/favicon.ico"),
     }),
     new MiniCssExtractPlugin({
-      filename: 'style.[contenthash].css',
+      filename: isProduction ? "static/css/[name].[contenthash:8].css" : "static/css/[name].css",
+      chunkFilename: isProduction
+        ? "static/css/[name].[contenthash:8].chunk.css"
+        : "static/css/[name].chunk.css",
     }),
   ],
-  resolve: {
-    modules: ['node_modules'],
-    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.css', '.scss'],
-    aliasFields: ['browser'],
-    alias: {
-      '@': path.resolve(__dirname, 'src/components')
+  devServer: {
+    static: {
+      directory: path.resolve(__dirname, "public"),
+      publicPath: "/",
+      watch: true,
+    },
+    historyApiFallback: true,
+    hot: true,
+    open: true,
+    port: 3000,
+    client: {
+      overlay: true,
     },
   },
-  module: {
-    strictExportPresence: true,
-    rules: [
-      {
-        test: /\.tsx?$/,
-        use: 'babel-loader',
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.m?js$/,
-        exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env']
-          }
-        }
-      },
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: ['babel-loader'],
-      },
-      {
-        test: /\.(sc|sa|c)ss/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
-        include: [path.resolve(__dirname, 'src','scss')],
-      },
-      {
-        test: /\.md$/i,
-        use: ['html-loader', 'markdown-loader']
-      },
-      {
-        test: /\.svg$/,
-        use: ['@svgr/webpack', 'url-loader'],
-      },
-      {
-        test: /.(gif|png|jpe?g|webp)$/i,
-        use: [
-          'file-loader',
-          {
-            loader: 'image-webpack-loader',
-            options: {
-              webp: {
-                quality: 80
-              }
-            }
-          }
-        ]
-      },
-    ]
+  performance: {
+    hints: isProduction ? "warning" : false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000,
   },
-
 };
