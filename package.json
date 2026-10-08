@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "keywords": [],
+  "homepage": "",
   "author": "Ulich Igor",
+  "main": "index.jsx",
   "license": "ISC",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
