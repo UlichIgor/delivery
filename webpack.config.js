@@ -42,7 +42,19 @@ module.exports = {
       },
       {
         test: /\.(css|sass|scss)$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          {
+            loader: "sass-loader",
+            options: {
+              api: "modern",
+              sassOptions: {
+                loadPaths: [path.resolve(__dirname, "node_modules")],
+              },
+            },
+          },
+        ],
       },
       {
         test: /\.(png|jpe?g|gif|webp|svg)$/i,

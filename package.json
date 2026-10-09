@@ -20,7 +20,7 @@
   "scripts": {
     "clean": "rimraf ./build && tsc",
     "start": "react-scripts start && webpack --mode development",
-    "build": "react-scripts build && webpack --progress --mode production",
+    "build": "webpack --progress --mode production",
     "deploy": "gh-pages -d build"
   },
   "browserslist": [

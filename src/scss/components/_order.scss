@@ -1,3 +1,7 @@
+@use "../var" as *;
+@use "../mixins/zindex" as *;
+@use "bootstrap/scss/bootstrap" as bootstrap;
+
 .Empty {
   position: absolute;
   top: 8%;
@@ -12,25 +16,25 @@
   z-index: z("empty");
 }
 
-@include media-breakpoint-down(xl) {
+@include bootstrap.media-breakpoint-down(xl) {
   .Empty {
     width: 65%;
   }
 }
 
-@include media-breakpoint-down(lg) {
+@include bootstrap.media-breakpoint-down(lg) {
   .Empty {
     width: 75%;
   }
 }
 
-@include media-breakpoint-down(md) {
+@include bootstrap.media-breakpoint-down(md) {
   .Empty {
     width: 85%;
   }
 }
 
-@include media-breakpoint-down(sm) {
+@include bootstrap.media-breakpoint-down(sm) {
   .Empty {
     width: 95%;
   }
@@ -86,25 +90,25 @@
   left: 0;
   width: 100%;
 }
-@include media-breakpoint-down(xl) {
+@include bootstrap.media-breakpoint-down(xl) {
   .Shop__body {
     min-width: 65%;
   }
 }
 
-@include media-breakpoint-down(lg) {
+@include bootstrap.media-breakpoint-down(lg) {
   .Shop__body {
     min-width: 75%;
   }
 }
 
-@include media-breakpoint-down(md) {
+@include bootstrap.media-breakpoint-down(md) {
   .Shop__body {
     min-width: 85%;
   }
 }
 
-@include media-breakpoint-down(sm) {
+@include bootstrap.media-breakpoint-down(sm) {
   .Shop__body {
     min-width: 95%;
   }

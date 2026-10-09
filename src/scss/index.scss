@@ -1,38 +1,21 @@
-@import 'node_modules/bootstrap/scss/bootstrap.scss';
-@import 'setings';
-@import 'var';
-@import 'mixins/variables';
-@import 'mixins/zindex';
-@import 'components/header';
-@import 'components/poster';
-@import 'components/item';
-@import 'components/categories';
-@import 'components/order';
-@import 'components/footer';
-body{
+@use "bootstrap/scss/bootstrap";
+@use "setings";
+@use "var" as *;
+@use "mixins/zindex" as *;
+@use "components/header";
+@use "components/poster";
+@use "components/item";
+@use "components/categories";
+@use "components/order";
+@use "components/footer";
+@use "fonts";
+
+body {
   margin: 0;
   padding: 0;
-font-family: 'Open Sans', sans-serif;
-font-weight: 400;
-background: $fon;
-color:$white;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  background: $fon;
+  color: $white;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@import'fonts';

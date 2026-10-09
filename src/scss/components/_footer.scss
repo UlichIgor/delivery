@@ -1,3 +1,6 @@
+@use "../var" as *;
+@use "bootstrap/scss/bootstrap" as bootstrap;
+
 footer.footer{
   .container-fluid{
    padding: 0;  
@@ -21,7 +24,7 @@ footer.footer{
   }
 }
 
-@include media-breakpoint-down(sm){
+@include bootstrap.media-breakpoint-down(sm){
   .footerFirst {
     min-height: 120px;
   }
@@ -66,7 +69,7 @@ color:$white;
   flex-direction: row;
       justify-content: space-between;
 }
-@include media-breakpoint-down(sm){
+@include bootstrap.media-breakpoint-down(sm){
   .footerBotom{
     min-height: 30px;
 

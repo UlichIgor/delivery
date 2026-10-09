@@ -1,3 +1,6 @@
+@use "../var" as *;
+@use "bootstrap/scss/bootstrap" as bootstrap;
+
 .Categories {
   position: relative;
   top: 0;
@@ -25,7 +28,7 @@
 }
 
 
-@include media-breakpoint-down(sm) {
+@include bootstrap.media-breakpoint-down(sm) {
   .Categories {
     display: flex;
     align-items: center;
