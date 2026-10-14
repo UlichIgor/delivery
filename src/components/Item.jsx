@@ -1,9 +1,11 @@
 import PropTypes from "prop-types";
 
 function Item({ item, onAdd }) {
+  const imageSrc = `${process.env.PUBLIC_URL}/images/${item.img.trim()}`;
+
   return (
     <div className="item">
-      <img src={"../images/" + item.img} alt="foto" />
+      <img src={imageSrc} alt="foto" />
       <h4>{item.title}</h4>
       <p>{item.desc}</p>
       <b>{item.price}.грн</b>

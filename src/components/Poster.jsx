@@ -9,7 +9,7 @@ function Poster() {
       <Container fluid className="Poster">
         <Carousel>
           <Carousel.Item>
-          <Image className="d-block w-100" src="./images/poster1.webp" alt="First slide" />
+          <Image className="d-block w-100" src={`${process.env.PUBLIC_URL}/images/poster1.webp`} alt="First slide" />
             <Carousel.Caption className="PosterBlock">
               <div className="Poster__title">
                 <h3>гігасет 2000г три дракони та три філадельфії</h3>
@@ -21,7 +21,7 @@ function Poster() {
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
-          <Image className="d-block w-100" src="./images/poster2.webp" alt="Second slide" />
+          <Image className="d-block w-100" src={`${process.env.PUBLIC_URL}/images/poster2.webp`} alt="Second slide" />
 
             <Carousel.Caption className="PosterBlock">
               <div className="Poster__title"><h3>Гранд Філадельфія</h3></div>

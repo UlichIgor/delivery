@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./components/Header";
 import Items from "./components/Items";
 import Footer from "./components/Footer";
@@ -31,7 +31,7 @@ class App extends React.Component {
         {
           id: 1,
           title: "Сет \"Три Дракони\"",
-          img: "grand-networks.webp ",
+          img: "grand-networks.webp",
           desc: "Червоний дракон, Золотий дракон, Зелений дракон",
           category: "sets",
           price: "700",
@@ -49,7 +49,7 @@ class App extends React.Component {
         {
           id: 3,
           title: "Поке і салати",
-          img: "Poke-and-salads.webp ",
+          img: "Poke-and-salads.webp",
           desc: "Поке і салати",
           category: "poke",
           price: "73",
@@ -58,7 +58,7 @@ class App extends React.Component {
         {
           id: 4,
           title: "Паста, локшина",
-          img: "Pasta-lokshina.webp ",
+          img: "Pasta-lokshina.webp",
           desc: "Паста, локшина",
           category: "rice",
           price: "57",
@@ -67,7 +67,7 @@ class App extends React.Component {
         {
           id: 5,
           title: "Мідії у вершковому соусі",
-          img: "Ribni-stravi.webp ",
+          img: "Ribni-stravi.webp",
           desc: "Рибні страви",
           category: "fish",
           price: "720",
@@ -76,7 +76,7 @@ class App extends React.Component {
         {
           id: 6,
           title: "Супи",
-          img: "Soup-and.webp ",
+          img: "Soup-and.webp",
           desc: "Супи",
           category: "soups",
           price: "49",
@@ -85,7 +85,7 @@ class App extends React.Component {
         {
           id: 7,
           title: "Сік Сандора в асортименті 1л.",
-          img: "Napoi.webp ",
+          img: "Napoi.webp",
           desc: "Напої",
           category: "drinks",
           price: "75",
@@ -94,7 +94,7 @@ class App extends React.Component {
         {
           id: 8,
           title: "Grand сет \"Три філадельфії\"",
-          img: "grand-set-filadelfii.webp ",
+          img: "grand-set-filadelfii.webp",
           desc: "Філадельфія з лососем, Філадельфія з тунцем, Філадельфія з вугрем",
           category: "sets",
           price: "1290",
@@ -103,7 +103,7 @@ class App extends React.Component {
         {
           id: 9,
           title: "Grand cет \"5 смаків\"",
-          img: "5 flavors.webp ",
+          img: "5 flavors.webp",
           desc: "Філадельфія з лососем, Філадельфія з тунцем, Каліфорнія з тунцем, Зелений дракон, Унагі рол з криветкою",
           category: "sets",
           price: "1775",
@@ -112,7 +112,7 @@ class App extends React.Component {
         {
           id: 10,
           title: "Каліфорнія з лососем",
-          img: "California.webp ",
+          img: "California.webp",
           desc: "Лосось, Огірок, Масага, Соус спайс, Авокадо",
           category: "rolls",
           price: "360",
@@ -121,7 +121,7 @@ class App extends React.Component {
         {
           id: 11,
           title: "Каліфорнія з креветкою",
-          img: "California-2.webp ",
+          img: "California-2.webp",
           desc: "Креветка темпура, Огірок, Масага, Соус спайс, Авокадо",
           category: "rolls",
           price: "370",
@@ -130,7 +130,7 @@ class App extends React.Component {
         {
           id: 12,
           title: "Королівські креветки з пармезаном",
-          img: "Ribni-stravi-2.webp ",
+          img: "Ribni-stravi-2.webp",
           desc: "Рибні страви",
           category: "fish",
           price: "720",
@@ -139,7 +139,7 @@ class App extends React.Component {
         {
           id: 13,
           title: "Гранд соте з морепродуктами",
-          img: "Ribni-stravi-3.webp ",
+          img: "Ribni-stravi-3.webp",
           desc: "Рибні страви",
           category: "fish",
           price: "1200",
@@ -148,7 +148,7 @@ class App extends React.Component {
         {
           id: 14,
           title: "Гранд Плато Гриль",
-          img: "Ribni-stravi-4.webp ",
+          img: "Ribni-stravi-4.webp",
           desc: "Рибні страви",
           category: "fish",
           price: "1250",
@@ -157,7 +157,7 @@ class App extends React.Component {
         {
           id: 15,
           title: "Запечені креветки у вершковому соусі",
-          img: "Ribni-stravi-5.webp ",
+          img: "Ribni-stravi-5.webp",
           desc: "Рибні страви",
           category: "fish",
           price: "430",
@@ -166,7 +166,7 @@ class App extends React.Component {
         {
           id: 16,
           title: "Запечені креветки з манго",
-          img: "Ribni-stravi-6.webp ",
+          img: "Ribni-stravi-6.webp",
           desc: "Рибні страви",
           category: "fish",
           price: "630",
@@ -175,7 +175,7 @@ class App extends React.Component {
         {
           id: 17,
           title: "Сік Rich",
-          img: "Napoi-2.webp ",
+          img: "Napoi-2.webp",
           desc: "Напої",
           category: "drinks",
           price: "45",
@@ -184,7 +184,7 @@ class App extends React.Component {
         {
           id: 18,
           title: "Coca cola",
-          img: "Napoi-3.webp ",
+          img: "Napoi-3.webp",
           desc: "Напої",
           category: "drinks",
           price: "85",
@@ -193,7 +193,7 @@ class App extends React.Component {
         {
           id: 19,
           title: "Bonaqua",
-          img: "Bonaqua.webp ",
+          img: "Bonaqua.webp",
           desc: "Напої",
           category: "drinks",
           price: "75",
@@ -202,7 +202,7 @@ class App extends React.Component {
         {
           id: 20,
           title: "Мисо Суп С Лососем",
-          img: "Soup-and-2.webp ",
+          img: "Soup-and-2.webp",
           desc: "Состав: Мясо бульон, лосось, вакаме, кунжут, зеленый лук",
           category: "soups",
           price: "146",
@@ -211,7 +211,7 @@ class App extends React.Component {
         {
           id: 21,
           title: "Мисо Суп Классический",
-          img: "Soup-and-3.webp ",
+          img: "Soup-and-3.webp",
           desc: "Состав: Мисо бульон, вакаме, кунжут, зеленый лук",
           category: "soups",
           price: "43",
@@ -220,7 +220,7 @@ class App extends React.Component {
         {
           id: 22,
           title: "Салат Цезар з куркою",
-          img: "Poke-and-salads-2.webp ",
+          img: "Poke-and-salads-2.webp",
           desc: "Салат Айсберг, салат Лолло Біонда, соус Цезар, смажена курка, бекон, помідори чері, перепелині яйця, пармезан,",
           category: "poke",
           price: "189",
@@ -229,7 +229,7 @@ class App extends React.Component {
         {
           id: 23,
           title: "Поке боул з креветками",
-          img: "Poke-and-salads-3.webp ",
+          img: "Poke-and-salads-3.webp",
           desc: "Креветки, авокадо, апельсин, салат айсберг, огірок, манговий соус,соєвий соус, рис, ікра, мікрогрін Вага - 380 г",
           category: "poke",
           price: "194",

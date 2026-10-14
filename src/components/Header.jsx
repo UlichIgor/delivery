@@ -6,7 +6,6 @@ import {
   Nav,
   NavLink,
   Navbar,
-  NavbarBrand,
 } from "react-bootstrap";
 import Image from "react-bootstrap/Image";
 import { FaShoppingCart } from "react-icons/fa";
@@ -47,19 +46,19 @@ function Header({ orders, onDelete, onChangeAmount }) {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="container justify-content-between align-items-center">
-              <NavbarBrand href="/">
+              <Navbar.Brand href="#/">
                 <Image
-                  src="./images/logo.webp"
+                  src={`${process.env.PUBLIC_URL}/images/logo.webp`}
                   height={118}
                   width={241}
                   className="d-inline-block aligin-center"
                   alt="Logo"
                 />
-              </NavbarBrand>
-              <NavLink href="/about">Про нас</NavLink>
-              <NavLink href="/gallery">Зона доставки</NavLink>
-              <NavLink href="/blog">Залишити відгук</NavLink>
-              <NavLink href="/contact">Контакти</NavLink>
+              </Navbar.Brand>
+              <NavLink href="#/about">Про нас</NavLink>
+              <NavLink href="#/gallery">Зона доставки</NavLink>
+              <NavLink href="#/blog">Залишити відгук</NavLink>
+              <NavLink href="#/contact">Контакти</NavLink>
               <NavLink href="tel:+380688744734" className="Phone">
                 +38 (068) 874-47-34
               </NavLink>

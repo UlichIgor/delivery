@@ -1,6 +1,6 @@
-import { Container, Image } from "react-bootstrap"
+import { Container, Image } from "react-bootstrap";
 
-function Footer(){
+function Footer() {
     return (
       <footer className='footer'>
         <Container fluid>
@@ -11,26 +11,26 @@ function Footer(){
               </div>
               <div className='footerFirst__content_icons'>
                 <a href='/' className='iconsLink'>
-                  <Image src="./images/facebook.webp"
+                  <Image src={`${process.env.PUBLIC_URL}/images/facebook.webp`}
                     height={30}
                     width={40}
                     rounded />
                 </a>
                 <a href='/' className='iconsLink'>
-                  <Image src="./images/instagram.webp"
+                  <Image src={`${process.env.PUBLIC_URL}/images/instagram.webp`}
                     height={30}
                     width={40}
                     rounded />
                 </a>
                 <a href='/' className='iconsLink'>
-                  <Image src="./images/tik-tok.webp"
+                  <Image src={`${process.env.PUBLIC_URL}/images/tik-tok.webp`}
                     height={30}
                     width={40}
                     rounded />
                 </a>
               </div>
             </div>
-            <Image src="./images/fon-footer.webp"/> 
+            <Image src={`${process.env.PUBLIC_URL}/images/fon-footer.webp`} />
           </div>
           <div className='footerBotom'>
 <div className='footerBotom__date'>&copy; sushi 2023</div>

@@ -3,9 +3,11 @@ import Image from "react-bootstrap/Image";
 import { FaTrash } from "react-icons/fa";
 
 function Order({ item, onDelete, onChangeAmount }) {
+  const imageSrc = `${process.env.PUBLIC_URL}/images/${item.img.trim()}`;
+
   return (
     <div className="Item">
-      <Image src={"../images/" + item.img} style={{ width: "80px", height: "120px" }} alt="react logo" />
+      <Image src={imageSrc} style={{ width: "80px", height: "120px" }} alt="react logo" />
       <h4>{item.title}</h4>
       <div className="shopCounter">
         <button
