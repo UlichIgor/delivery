@@ -5,4 +5,5 @@
     "font-weight-notation": "numeric",
     "function-disallowed-list": ["linear-gradient"]
   }
+  
 }
