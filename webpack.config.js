@@ -1,74 +1,74 @@
-import { resolve as _resolve, join } from "path";
-import HtmlWebpackPlugin from "html-webpack-plugin";
-import MiniCssExtractPlugin, { loader as _loader } from "mini-css-extract-plugin";
+import { resolve as resolvePath, join, dirname } from "path";
 import { fileURLToPath } from "url";
-import { dirname } from "path";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
-console.log("__dirname:", __dirname);
-console.log("__filename:", __filename);
-export const mode = "development";
-export const devtool = "source-map";
-export const context = _resolve(__dirname, "src");
-export const entry = {
-  main: _resolve(__dirname, "src/index.jsx"),
-};
-export const output = {
-  path: _resolve(__dirname, "build"),
-  filename: "[name].js",
-  clean: true,
-};
-export const devServer = {
-  static: {
-    directory: join(__dirname, "build"),
+const config = {
+  mode: "development",
+  devtool: "source-map",
+  context: resolvePath(__dirname, "src"),
+  entry: {
+    main: resolvePath(__dirname, "src/index.jsx"),
   },
-  compress: true,
-  hot: true,
-  open: true,
-  historyApiFallback: true,
-};
-export const performance = {
-  hints: "warning",
-  maxEntrypointSize: 512000,
-  maxAssetSize: 512000,
-};
-export const plugins = [
-  new HtmlWebpackPlugin({
-    template: _resolve(__dirname, "public/index.html"),
-    filename: "index.html",
-  }),
-  new MiniCssExtractPlugin({
-    filename: "style.[contenthash].css",
-  }),
-];
-export const resolve = {
-  modules: ["node_modules"],
-  extensions: [".js", ".jsx", ".json", ".css", ".scss"],
-  alias: {
-    "@": _resolve(__dirname, "src/components"),
+  output: {
+    path: resolvePath(__dirname, "build"),
+    filename: "[name].js",
+    clean: true,
   },
-};
-export const module = {
-  rules: [
-    {
-      test: /\.jsx?$/,
-      exclude: /node_modules/,
-      use: {
-        loader: "babel-loader",
-        options: {
-          presets: ["@babel/preset-env", "@babel/preset-react"],
+  devServer: {
+    static: {
+      directory: join(__dirname, "build"),
+    },
+    compress: true,
+    hot: true,
+    open: true,
+    historyApiFallback: true,
+  },
+  performance: {
+    hints: "warning",
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000,
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: resolvePath(__dirname, "public/index.html"),
+      filename: "index.html",
+    }),
+    new MiniCssExtractPlugin({
+      filename: "style.[contenthash].css",
+    }),
+  ],
+  resolve: {
+    modules: ["node_modules"],
+    extensions: [".js", ".jsx", ".json", ".css", ".scss"],
+    alias: {
+      "@": resolvePath(__dirname, "src/components"),
+    },
+  },
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env", "@babel/preset-react"],
+          },
         },
       },
-    },
-    {
-      test: /\.(sa|sc|c)ss$/,
-      use: [_loader, "css-loader", "sass-loader"],
-    },
-    {
-      test: /\.(png|jpe?g|gif|webp|svg)$/i,
-      type: "asset/resource",
-    },
-  ],
+      {
+        test: /\.(sa|sc|c)ss$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+      },
+      {
+        test: /\.(png|jpe?g|gif|webp|svg)$/i,
+        type: "asset/resource",
+      },
+    ],
+  },
 };
+
+export default config;
