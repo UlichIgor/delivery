@@ -123,6 +123,15 @@
   width: 100%;
   border: 1px solid #000000;
   z-index: z("item");
+  img {
+    position: relative;
+    top: 0;
+    left: 0;
+    max-height: 110px;
+    padding:10  5px;
+    border-radius: 10px;
+
+  }
 }
 #root > div.Shop__body > div > div > img {
   position: relative;
