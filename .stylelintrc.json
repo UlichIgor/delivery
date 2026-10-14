@@ -1,0 +1,8 @@
+{
+  "customSyntax": "@stylelint/postcss-css-in-js",
+  "rules": {
+    "color-no-invalid-hex": true,
+    "font-weight-notation": "numeric",
+    "function-disallowed-list": ["linear-gradient"]
+  }
+}
