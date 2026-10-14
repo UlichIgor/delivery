@@ -1,15 +1,18 @@
-const path = require("path");
-const webpack = require("webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
+import { resolve as _resolve } from "path";
+import { DefinePlugin } from "webpack";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import MiniCssExtractPlugin, { loader as _loader } from "mini-css-extract-plugin";
+import CopyWebpackPlugin from "copy-webpack-plugin";
 
+// eslint-disable-next-line no-undef
 const projectRoot = __dirname;
-const { homepage = "" } = require("./package.json");
+import _package from "./package.json";
+const { homepage = "" } = _package;
 
-module.exports = (_env, argv = {}) => {
+export default (_env, argv = {}) => {
   const mode = argv.mode || "development";
   const publicUrl = (
+    // eslint-disable-next-line no-undef
     process.env.PUBLIC_URL ||
     (mode === "production" ? homepage.trim() : "")
   ).replace(/\/$/, "");
@@ -17,17 +20,17 @@ module.exports = (_env, argv = {}) => {
   return {
     mode,
     devtool: mode === "development" ? "source-map" : false,
-    context: path.resolve(projectRoot, "src"),
-    entry: path.resolve(projectRoot, "src/index.jsx"),
+    context: _resolve(projectRoot, "src"),
+    entry: _resolve(projectRoot, "src/index.jsx"),
     output: {
-      path: path.resolve(projectRoot, "build"),
+      path: _resolve(projectRoot, "build"),
       filename: "[name].js",
       publicPath: publicUrl ? `${publicUrl}/` : "/",
       clean: true,
     },
     devServer: {
       static: {
-        directory: path.resolve(projectRoot, "build"),
+        directory: _resolve(projectRoot, "build"),
       },
       compress: true,
       hot: true,
@@ -40,11 +43,11 @@ module.exports = (_env, argv = {}) => {
       maxAssetSize: 512000,
     },
     plugins: [
-      new webpack.DefinePlugin({
+      new DefinePlugin({
         "process.env.PUBLIC_URL": JSON.stringify(publicUrl),
       }),
       new HtmlWebpackPlugin({
-        template: path.resolve(projectRoot, "public/index.html"),
+        template: _resolve(projectRoot, "public/index.html"),
       }),
       new MiniCssExtractPlugin({
         filename: "style.[contenthash].css",
@@ -52,7 +55,7 @@ module.exports = (_env, argv = {}) => {
       new CopyWebpackPlugin({
         patterns: [
           {
-            from: path.resolve(projectRoot, "public"),
+            from: _resolve(projectRoot, "public"),
             to: ".",
             globOptions: {
               ignore: ["**/index.html"],
@@ -63,7 +66,7 @@ module.exports = (_env, argv = {}) => {
     ],
     resolve: {
       alias: {
-        "@": path.resolve(projectRoot, "src/components"),
+        "@": _resolve(projectRoot, "src/components"),
       },
       extensions: [".js", ".jsx", ".json"],
     },
@@ -83,7 +86,7 @@ module.exports = (_env, argv = {}) => {
         },
         {
           test: /\.(sa|sc|c)ss$/,
-          use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+          use: [_loader, "css-loader", "sass-loader"],
         },
         {
           test: /\.(png|jpe?g|gif|webp|svg)$/i,
