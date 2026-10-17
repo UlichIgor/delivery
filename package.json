@@ -74,6 +74,7 @@
     "html-webpack-plugin": "^5.5.3",
     "image-webpack-loader": "^8.1.0",
     "mini-css-extract-plugin": "^2.7.6",
+    "minimizer-webpack-plugin": "^5.13.0",
     "postcss": "^8.4.31",
     "postcss-loader": "^7.3.3",
     "raw-loader": "^4.0.2",

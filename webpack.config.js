@@ -4,6 +4,7 @@ const { DefinePlugin } = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const MinimizerPlugin = require("minimizer-webpack-plugin");
 
 const projectRoot = __dirname;
 const { homepage = "" } = require("./package.json");
@@ -60,6 +61,13 @@ module.exports = (_env, argv = {}) => {
             },
           },
         ],
+      }),
+      new MinimizerPlugin({
+        minimizerOptions: {
+          compress: {
+            drop_console: true,
+          },
+        },
       }),
     ],
     resolve: {
