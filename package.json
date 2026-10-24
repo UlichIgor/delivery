@@ -33,7 +33,7 @@
   },
   "scripts": {
     "clean": "rimraf build",
-    "start": "react-scripts start --port 3000",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"

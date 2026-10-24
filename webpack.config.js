@@ -1,106 +1,66 @@
-import { resolve } from "path";
-import { DefinePlugin } from "webpack";
+import { resolve as _resolve } from "path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin, { loader as _loader } from "mini-css-extract-plugin";
-import CopyWebpackPlugin from "copy-webpack-plugin";
-import MinimizerPlugin from "minimizer-webpack-plugin";
 
 // eslint-disable-next-line no-undef
-const projectRoot = __dirname;
-import _package from "./package.json";
-const { homepage = "" } = _package;
+const isProduction = process.env.NODE_ENV === "production";
 
-export default (_env, argv = {}) => {
-  const mode = argv.mode || "development";
-  const publicUrl = (
-    // eslint-disable-next-line no-undef
-    process.env.PUBLIC_URL ||
-    (mode === "production" ? homepage.trim() : "")
-  ).replace(/\/$/, "");
-
-  return {
-    mode,
-    devtool: mode === "development" ? "source-map" : false,
-    context: resolve(projectRoot, "src"),
-    entry: resolve(projectRoot, "src/index.jsx"),
-    output: {
-      path: resolve(projectRoot, "build"),
-      filename: "[name].js",
-      publicPath: publicUrl ? `${publicUrl}/` : "/",
-      clean: true,
-    },
-    devServer: {
-      static: {
-        directory: resolve(projectRoot, "build"),
+export const mode = isProduction ? "production" : "development";
+export const devtool = isProduction ? "source-map" : "eval-source-map";
+export const entry = "./src/index.jsx";
+export const output = {
+  // eslint-disable-next-line no-undef
+  path: _resolve(__dirname, "dist"),
+  filename: "bundle.js",
+  clean: true,
+};
+export const module = {
+  rules: [
+    {
+      test: /\.jsx?$/,
+      exclude: /node_modules/,
+      use: {
+        loader: "babel-loader",
+        options: {
+          presets: ["@babel/preset-env", "@babel/preset-react"],
+        },
       },
-      compress: true,
-      hot: true,
-      open: true,
-      historyApiFallback: true,
     },
-    performance: {
-      hints: "warning",
-      maxEntrypointSize: 512000,
-      maxAssetSize: 512000,
-    },
-    plugins: [
-      new DefinePlugin({
-        "process.env.PUBLIC_URL": JSON.stringify(publicUrl),
-      }),
-      new HtmlWebpackPlugin({
-        template: resolve(projectRoot, "public/index.html"),
-      }),
-      new MiniCssExtractPlugin({
-        filename: "style.[contenthash].css",
-      }),
-      new CopyWebpackPlugin({
-        patterns: [
-          {
-            from: resolve(projectRoot, "public"),
-            to: ".",
-            globOptions: {
-              ignore: ["**/index.html"],
-            },
-          },
-        ],
-      }),
-      new MinimizerPlugin({
-        minimizerOptions: {
-          compress: {
-            drop_console: true,
-          },
-        },
-      }),
-    ],
-    resolve: {
-      alias: {
-        "@": resolve(projectRoot, "src/components"),
-      },
-      extensions: [".js", ".jsx", ".json"],
-    },
-    module: {
-      rules: [
-        {
-          test: /\.jsx?$/,
-          exclude: /node_modules/,
-          use: {
-            loader: "babel-loader",
-            options: {
-              babelrc: false,
-              configFile: false,
-              presets: ["@babel/preset-env", "@babel/preset-react"],
-            },
-          },
-        },
-        {
-          test: /\.(sa|sc|c)ss$/,
-          use: [_loader, "css-loader", "sass-loader"],
-        },
-        {
-          test: /\.(png|jpe?g|gif|webp|svg)$/i,
-          type: "asset/resource",
-        },
+    {
+      test: /\.s[ac]ss$/i,
+      use: [
+        isProduction ? _loader : "style-loader",
+        "css-loader",
+        "sass-loader",
       ],
     },
-  };
+    {
+      test: /\.(png|jpe?g|gif|svg|webp)$/i,
+      type: "asset/resource",
+      generator: {
+        filename: "assets/[name][ext]",
+      },
+    },
+  ],
+};
+export const resolve = {
+  extensions: [".js", ".jsx"],
+};
+export const plugins = [
+  new HtmlWebpackPlugin({
+    template: "./public/index.html",
+  }),
+  new MiniCssExtractPlugin({
+    filename: "[name].css",
+    chunkFilename: "[id].css",
+  }),
+];
+export const devServer = {
+  static: {
+    // eslint-disable-next-line no-undef
+    directory: _resolve(__dirname, "dist"),
+  },
+  port: 3000,
+  hot: true,
+  historyApiFallback: true,
 };
