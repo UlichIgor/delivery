@@ -33,7 +33,7 @@ function Footer() {
             <Image src={`${process.env.PUBLIC_URL}/images/fon-footer.webp`} />
           </div>
           <div className='footerBotom'>
-<div className='footerBotom__date'>&copy; sushi 2023</div>
+<div className='footerBotom__date'>&copy; sushi 2026</div>
 <div className='footerBotom__autor'><small>autor</small> Ulich Igor</div>
           </div>
         </Container>
