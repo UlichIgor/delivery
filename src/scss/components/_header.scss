@@ -77,3 +77,157 @@ span.Circle{
   font-weight: 400;
   font-size: calc(9px + 0.625vw);
 }
+
+.site-navbar {
+  padding: 8px clamp(12px, 3vw, 40px);
+}
+
+.site-navbar__container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 clamp(12px, 2vw, 28px);
+}
+
+.site-navbar__brand {
+  order: 0;
+  flex: 0 1 auto;
+  margin-right: 0;
+
+  img {
+    display: block;
+    width: clamp(150px, 18vw, 241px);
+    height: auto;
+  }
+}
+
+.site-navbar .navbar-collapse {
+  order: 1;
+  flex-grow: 1;
+}
+
+.site-navbar__controls {
+  order: 2;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+  margin-left: 0;
+}
+
+.site-navbar .Circle__box {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  padding: 0;
+  border: 0;
+  color: $white;
+  text-decoration: none;
+
+  &:hover {
+    color: $accent2;
+  }
+}
+
+.site-navbar .Shop {
+  position: static;
+  width: 24px;
+  height: 24px;
+  color: inherit;
+}
+
+.site-navbar .Shop.active {
+  color: $accent;
+}
+
+.site-navbar .Circle {
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  font-size: 11px;
+}
+
+.site-navbar .navbar-toggler {
+  padding: 10px;
+  border-color: rgba($white, 0.5);
+}
+
+.site-navbar__links {
+  align-items: center;
+  justify-content: flex-end;
+  gap: clamp(4px, 1vw, 16px);
+}
+
+.site-navbar .navbar-nav .nav-link {
+  padding: 10px 6px;
+  font-size: clamp(13px, 0.9vw, 16px);
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.site-navbar .navbar-nav .Phone {
+  color: $white;
+  font-weight: 700;
+}
+
+@media (max-width: 767.98px) {
+  .site-navbar__container {
+    column-gap: 8px;
+  }
+
+  .site-navbar__controls {
+    margin-left: auto;
+  }
+
+  .site-navbar .navbar-collapse {
+    order: 2;
+    flex-basis: 100%;
+  }
+
+  .site-navbar__links {
+    align-items: stretch;
+    gap: 0;
+    margin-top: 12px;
+    padding: 8px 0;
+    border-top: 1px solid rgba($white, 0.2);
+  }
+
+  .site-navbar .navbar-nav .nav-link {
+    padding: 12px 8px;
+    white-space: normal;
+  }
+
+  .site-navbar .navbar-nav .Phone {
+    margin-top: 4px;
+    border-top: 1px solid rgba($white, 0.2);
+  }
+}
+
+@media (max-width: 359.98px) {
+  .site-navbar {
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+
+  .site-navbar__brand img {
+    width: 132px;
+  }
+
+  .site-navbar__controls {
+    gap: 2px;
+  }
+
+  .site-navbar .Circle__box {
+    width: 40px;
+    min-width: 40px;
+  }
+
+  .site-navbar .navbar-toggler {
+    padding: 8px;
+  }
+}
