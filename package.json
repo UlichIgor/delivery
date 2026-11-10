@@ -4,7 +4,7 @@
   "private": true,
   "keywords": [],
   "description": "React application for leather wallet delivery",
-  "homepage": " https://ulichigor.github.io/delivery/",
+  "homepage": " /delivery/",
   "author": "Ulich Igor",
   "main": "index.jsx",
   "license": "ISC",
