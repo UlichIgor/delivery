@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
 import { FaPhoneAlt, FaWhatsapp, FaMapMarkerAlt, FaClock, FaInstagram, FaPaperPlane } from "react-icons/fa";
@@ -28,7 +29,7 @@ export default function Contact() {
           <p className="text-uppercase text-muted mb-2">Feast Sushi</p>
           <h1 className="fw-bold">Контакти</h1>
           <p className="text-muted mx-auto" style={{ maxWidth: 620 }}>
-            Ми на зв'язку та готові допомогти з вибором страв, оформленням замовлення
+            Ми на зв&apos;язку та готові допомогти з вибором страв, оформленням замовлення
             або відповідями на ваші запитання.
           </p>
         </div>
@@ -37,7 +38,7 @@ export default function Contact() {
           <Col lg={5}>
             <Card className="h-100 border-0 shadow-sm rounded-4">
               <Card.Body className="p-4 p-md-5">
-                <h3 className="h4 fw-bold mb-4">Як з нами зв'язатися</h3>
+                <h3 className="h4 fw-bold mb-4">Як з нами зв&apos;язатися</h3>
                 <div className="d-flex gap-3 mb-4">
                   <div className="text-danger fs-4"><FaPhoneAlt /></div>
                   <div>
@@ -85,7 +86,7 @@ export default function Contact() {
                 <p className="text-muted mb-4">Заповніть форму — повідомлення відкриється у WhatsApp менеджера.</p>
                 <Form onSubmit={submit}>
                   <Form.Group className="mb-3" controlId="contactName">
-                    <Form.Label>Ваше ім'я</Form.Label>
+                    <Form.Label>Ваше ім&apos;я</Form.Label>
                     <Form.Control name="name" value={form.name} onChange={update} placeholder="Як до вас звертатися?" required maxLength={80} />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="contactPhone">

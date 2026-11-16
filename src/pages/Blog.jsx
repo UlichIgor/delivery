@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { FaStar, FaRegStar, FaWhatsapp, FaCommentDots, FaHeart, FaPaperPlane } from "react-icons/fa";
