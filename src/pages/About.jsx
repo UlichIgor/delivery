@@ -3,7 +3,6 @@ import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import {
   FaFish,
   FaHeart,
-  FaLeaf,
   FaMapMarkerAlt,
   FaPhoneAlt,
   FaShoppingBasket,
