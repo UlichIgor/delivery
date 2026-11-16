@@ -10,6 +10,7 @@ import About from "./pages/About";
 import Blog from "./pages/Blog";
 import Contact from "./pages/Contact";
 import Gallery from "./pages/Gallery";
+import { getProducts, isSupabaseConfigured } from "./lib/supabase";
 
 class App extends React.Component {
   constructor(props) {
@@ -243,6 +244,15 @@ class App extends React.Component {
     this.deleteOrder = this.deleteOrder.bind(this);
     this.chooseCategory = this.chooseCategory.bind(this);
     this.changeOrderAmount = this.changeOrderAmount.bind(this);
+    this.clearOrder = this.clearOrder.bind(this);
+  }
+
+  componentDidMount() {
+    if (isSupabaseConfigured) {
+      getProducts()
+        .then((items) => { if (items && items.length) this.setState({ items, currentItems: items }); })
+        .catch((error) => console.error("Не вдалося завантажити меню з Supabase:", error));
+    }
   }
 
   render() {
@@ -252,6 +262,7 @@ class App extends React.Component {
           orders={this.state.orders}
           onDelete={this.deleteOrder}
           onChangeAmount={this.changeOrderAmount}
+          onClear={this.clearOrder}
         />
         <Categories
           categories={this.state.categories}
@@ -298,6 +309,10 @@ class App extends React.Component {
           : item
       ),
     }));
+  }
+
+  clearOrder() {
+    this.setState({ orders: [] });
   }
 
   addToOrder(item) {
