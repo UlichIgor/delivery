@@ -145,7 +145,8 @@ export default function Blog() {
                   </Button>
                   <span className="review-note">{isSupabaseConfigured ? "Відгук буде збережено в базі та надійде на модерацію." : "Поки база не налаштована, відгук відкриється у WhatsApp."}</span>
                 </div>
-                {error && <div className="thanks-panel mt-3" role="alert">{error}</div>}\n                {sent && (
+                {error && <div className="thanks-panel mt-3" role="alert">{error}</div>}
+                {sent && (
                   <div className="thanks-panel mt-3" role="status">
                     {isSupabaseConfigured ? "Дякуємо! Відгук збережено та очікує перевірки модератором." : "Дякуємо! Відкрили WhatsApp із підготовленим повідомленням. Натисніть «Надіслати» у WhatsApp, щоб передати відгук менеджеру."}
                   </div>
