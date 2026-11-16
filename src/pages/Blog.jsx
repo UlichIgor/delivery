@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { FaStar, FaRegStar, FaWhatsapp, FaCommentDots, FaHeart } from "react-icons/fa";
+import { FaStar, FaRegStar, FaWhatsapp, FaCommentDots, FaHeart, FaPaperPlane } from "react-icons/fa";
 import { createReview, isSupabaseConfigured } from "../lib/supabase";
 
 const MANAGER_PHONE = "380688744734";
@@ -99,7 +99,7 @@ export default function Blog() {
                   <Form.Control
                     type="text"
                     value={name}
-                    onChange={(event) => setName(event.target.value)}
+                    onChange={(event) => { setName(event.target.value); setSent(false); }}
                     placeholder="Як до вас звертатися?"
                     maxLength={60}
                   />
@@ -113,7 +113,7 @@ export default function Blog() {
                         key={value}
                         type="button"
                         className="rating-star"
-                        onClick={() => setRating(value)}
+                        onClick={() => { setRating(value); setSent(false); }}
                         aria-label={`Оцінка ${value} з 5`}
                         aria-pressed={rating === value}
                       >
@@ -141,7 +141,7 @@ export default function Blog() {
 
                 <div className="d-flex flex-column flex-sm-row align-items-sm-center gap-3">
                   <Button type="submit" className="gold-submit" disabled={review.trim().length < 5 || saving}>
-                    <FaWhatsapp className="me-2" /> {saving ? "Зберігаємо..." : "Надіслати відгук"}
+                    {isSupabaseConfigured ? <FaPaperPlane className="me-2" /> : <FaWhatsapp className="me-2" />} {saving ? "Зберігаємо..." : "Надіслати відгук"}
                   </Button>
                   <span className="review-note">{isSupabaseConfigured ? "Відгук буде збережено в базі та надійде на модерацію." : "Поки база не налаштована, відгук відкриється у WhatsApp."}</span>
                 </div>
