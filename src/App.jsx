@@ -274,8 +274,8 @@ class App extends React.Component {
                   categories={this.state.categories}
                   chooseCategory={this.chooseCategory}
                 />
-                <Items items={this.state.currentItems} onAdd={this.addToOrder} />
                 <Home />
+                <Items items={this.state.currentItems} onAdd={this.addToOrder} />
               </>
             )}
           />
