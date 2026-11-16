@@ -169,7 +169,7 @@ export default function Blog() {
               <div className="benefit">
                 <div className="benefit-icon"><FaWhatsapp /></div>
                 <h3>Зворотний зв’язок</h3>
-                <p>Ваше повідомлення буде підготовлене у WhatsApp — його потрібно буде надіслати вручну.</p>
+                <p>{isSupabaseConfigured ? "Відгук зберігається в базі та проходить модерацію перед публікацією." : "Після підключення бази відгуки зберігатимуться на сайті; поки що можна надіслати їх у WhatsApp."}</p>
               </div>
             </div>
           </Col>
