@@ -257,30 +257,35 @@ class App extends React.Component {
 
   render() {
     return (
-      <>
+      <Router>
         <Header
           orders={this.state.orders}
           onDelete={this.deleteOrder}
           onChangeAmount={this.changeOrderAmount}
           onClear={this.clearOrder}
         />
-        <Categories
-          categories={this.state.categories}
-          chooseCategory={this.chooseCategory}
-        />
-        <Router>
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/about" component={About} />
-            <Route exact path="/gallery" component={Gallery} />
-            <Route exact path="/blog" component={Blog} />
-            <Route exact path="/contact" component={Contact} />
-          </Switch>
-        </Router>
-
-        <Items items={this.state.currentItems} onAdd={this.addToOrder} />
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <>
+                <Categories
+                  categories={this.state.categories}
+                  chooseCategory={this.chooseCategory}
+                />
+                <Items items={this.state.currentItems} onAdd={this.addToOrder} />
+                <Home />
+              </>
+            )}
+          />
+          <Route exact path="/about" component={About} />
+          <Route exact path="/gallery" component={Gallery} />
+          <Route exact path="/blog" component={Blog} />
+          <Route exact path="/contact" component={Contact} />
+        </Switch>
         <Footer />
-      </>
+      </Router>
     );
   }
 
