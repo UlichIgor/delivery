@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { FaStar, FaRegStar, FaWhatsapp, FaCommentDots, FaHeart } from "react-icons/fa";
+import { createReview, isSupabaseConfigured } from "../lib/supabase";
 
 const MANAGER_PHONE = "380688744734";
 
@@ -9,18 +10,35 @@ export default function Blog() {
   const [rating, setRating] = useState(5);
   const [review, setReview] = useState("");
   const [sent, setSent] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState("");
 
-  const submitReview = (event) => {
+  const submitReview = async (event) => {
     event.preventDefault();
-    const message = [
-      "Відгук для Feast Sushi",
-      `Ім’я: ${name.trim() || "Не вказано"}`,
-      `Оцінка: ${rating}/5`,
-      `Відгук: ${review.trim()}`,
-    ].join("\n");
-    const url = `https://wa.me/${MANAGER_PHONE}?text=${encodeURIComponent(message)}`;
-    window.open(url, "_blank", "noopener,noreferrer");
-    setSent(true);
+    setError("");
+    setSaving(true);
+    try {
+      if (isSupabaseConfigured) {
+        await createReview({ name, rating, message: review });
+        setSent(true);
+        setReview("");
+        setName("");
+      } else {
+        const message = [
+          "Відгук для Feast Sushi",
+          `Ім’я: ${name.trim() || "Не вказано"}`,
+          `Оцінка: ${rating}/5`,
+          `Відгук: ${review.trim()}`,
+        ].join("\n");
+        const url = `https://wa.me/${MANAGER_PHONE}?text=${encodeURIComponent(message)}`;
+        window.open(url, "_blank", "noopener,noreferrer");
+        setSent(true);
+      }
+    } catch (submitError) {
+      setError(submitError.message || "Не вдалося зберегти відгук. Спробуйте ще раз.");
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -122,14 +140,14 @@ export default function Blog() {
                 </Form.Group>
 
                 <div className="d-flex flex-column flex-sm-row align-items-sm-center gap-3">
-                  <Button type="submit" className="gold-submit" disabled={review.trim().length < 5}>
-                    <FaWhatsapp className="me-2" /> Надіслати відгук
+                  <Button type="submit" className="gold-submit" disabled={review.trim().length < 5 || saving}>
+                    <FaWhatsapp className="me-2" /> {saving ? "Зберігаємо..." : "Надіслати відгук"}
                   </Button>
-                  <span className="review-note">Відгук відкриється у WhatsApp для надсилання менеджеру.</span>
+                  <span className="review-note">{isSupabaseConfigured ? "Відгук буде збережено в базі та надійде на модерацію." : "Поки база не налаштована, відгук відкриється у WhatsApp."}</span>
                 </div>
-                {sent && (
+                {error && <div className="thanks-panel mt-3" role="alert">{error}</div>}\n                {sent && (
                   <div className="thanks-panel mt-3" role="status">
-                    Дякуємо! Відкрили WhatsApp із підготовленим повідомленням. Натисніть «Надіслати» у WhatsApp, щоб передати відгук менеджеру.
+                    {isSupabaseConfigured ? "Дякуємо! Відгук збережено та очікує перевірки модератором." : "Дякуємо! Відкрили WhatsApp із підготовленим повідомленням. Натисніть «Надіслати» у WhatsApp, щоб передати відгук менеджеру."}
                   </div>
                 )}
               </Form>
