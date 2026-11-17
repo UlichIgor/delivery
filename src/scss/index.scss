@@ -1,3 +1,13 @@
+// Escape literal percent signs in SVG data URIs so SVGO can decode them.
+$escaped-characters: (
+  ("%", "%25"),
+  ("<", "%3c"),
+  (">", "%3e"),
+  ("#", "%23"),
+  ("(", "%28"),
+  (")", "%29"),
+);
+
 @import 'node_modules/bootstrap/scss/bootstrap.scss';
 @import 'setings';
 @import 'var';
