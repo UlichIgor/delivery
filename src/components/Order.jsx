@@ -1,36 +1,61 @@
 import PropTypes from "prop-types";
 import Image from "react-bootstrap/Image";
 import { FaTrash } from "react-icons/fa";
+import formatPrice from "../lib/formatPrice";
 
 function Order({ item, onDelete, onChangeAmount }) {
-  const imageSrc = `${process.env.PUBLIC_URL}/images/${item.img.trim()}`;
+  const imageName = typeof item.img === "string" ? item.img.trim() : "";
+  const imageSrc = imageName
+    ? `${process.env.PUBLIC_URL}/images/${imageName}`
+    : null;
 
   return (
-    <div className="Item">
-      <Image src={imageSrc} style={{ width: "80px", height: "120px" }} alt="react logo" />
-      <h4>{item.title}</h4>
-      <div className="shopCounter">
+    <article className="cart-item">
+      {imageSrc && (
+        <Image
+          className="cart-item__image"
+          src={imageSrc}
+          alt={item.title || "Страва з меню"}
+        />
+      )}
+      <div className="cart-item__details">
+        <h3>{item.title}</h3>
+        <span>{formatPrice(item.price)} за шт.</span>
+      </div>
+      <div className="cart-item__actions">
+        <div className="shopCounter" aria-label={`Кількість: ${item.amount}`}>
+          <button
+            type="button"
+            className="shopCounter__button"
+            aria-label={`Зменшити кількість: ${item.title}`}
+            disabled={Number(item.amount) <= 1}
+            onClick={() => onChangeAmount(item.id, -1)}
+          >
+            −
+          </button>
+          <output className="shopCounter__value">{item.amount}</output>
+          <button
+            type="button"
+            className="shopCounter__button"
+            aria-label={`Збільшити кількість: ${item.title}`}
+            onClick={() => onChangeAmount(item.id, 1)}
+          >
+            +
+          </button>
+        </div>
+        <strong className="cart-item__total">
+          {formatPrice(Number(item.price) * Number(item.amount))}
+        </strong>
         <button
           type="button"
-          className="minus"
-          id="minus"
-          onClick={() => onChangeAmount(item.id, -1)}
+          className="cart-item__remove"
+          aria-label={`Видалити з кошика: ${item.title}`}
+          onClick={() => onDelete(item.id)}
         >
-          -
-        </button>
-        <div className="counter">{item.amount}</div>
-        <button
-          type="button"
-          className="plus"
-          id="plus"
-          onClick={() => onChangeAmount(item.id, 1)}
-        >
-          +
+          <FaTrash aria-hidden="true" />
         </button>
       </div>
-      <b>{new Intl.NumberFormat().format(Number(item.price) * Number(item.amount))}.грн</b>
-      <FaTrash className="Delete" onClick={() => onDelete(item.id)} />
-    </div>
+    </article>
   );
 }
 

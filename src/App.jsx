@@ -17,7 +17,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       orders: [],
-      currentItems: [],
+      activeCategory: "all",
+      searchQuery: "",
       categories: [
         { key: "all", name: "Усе" },
         { key: "sets", name: "Grand сети" },
@@ -239,10 +240,10 @@ class App extends React.Component {
       ],
     };
 
-    this.state.currentItems = this.state.items;
     this.addToOrder = this.addToOrder.bind(this);
     this.deleteOrder = this.deleteOrder.bind(this);
     this.chooseCategory = this.chooseCategory.bind(this);
+    this.updateSearchQuery = this.updateSearchQuery.bind(this);
     this.changeOrderAmount = this.changeOrderAmount.bind(this);
     this.clearOrder = this.clearOrder.bind(this);
   }
@@ -250,12 +251,28 @@ class App extends React.Component {
   componentDidMount() {
     if (isSupabaseConfigured) {
       getProducts()
-        .then((items) => { if (items && items.length) this.setState({ items, currentItems: items }); })
+        .then((items) => { if (items && items.length) this.setState({ items }); })
         .catch((error) => console.error("Не вдалося завантажити меню з Supabase:", error));
     }
   }
 
+  getVisibleItems() {
+    const { items, activeCategory, searchQuery } = this.state;
+    const query = searchQuery.trim().toLocaleLowerCase("uk-UA");
+
+    return items.filter((item) => {
+      const matchesCategory =
+        activeCategory === "all" || item.category === activeCategory;
+      const searchableText = `${item.title || ""} ${item.desc || item.description || ""}`
+        .toLocaleLowerCase("uk-UA");
+
+      return matchesCategory && searchableText.includes(query);
+    });
+  }
+
   render() {
+    const visibleItems = this.getVisibleItems();
+
     return (
       <Router>
         <Header
@@ -270,12 +287,22 @@ class App extends React.Component {
             path="/"
             render={() => (
               <>
+                <Home />
                 <Categories
                   categories={this.state.categories}
+                  activeCategory={this.state.activeCategory}
+                  searchQuery={this.state.searchQuery}
+                  resultCount={visibleItems.length}
                   chooseCategory={this.chooseCategory}
+                  onSearchChange={this.updateSearchQuery}
                 />
-                <Home />
-                <Items items={this.state.currentItems} onAdd={this.addToOrder} />
+                <Items
+                  items={visibleItems}
+                  onAdd={this.addToOrder}
+                  onResetFilters={() => {
+                    this.setState({ activeCategory: "all", searchQuery: "" });
+                  }}
+                />
               </>
             )}
           />
@@ -290,14 +317,11 @@ class App extends React.Component {
   }
 
   chooseCategory(category) {
-    if (category === "all") {
-      this.setState({ currentItems: this.state.items });
-      return;
-    }
+    this.setState({ activeCategory: category });
+  }
 
-    this.setState({
-      currentItems: this.state.items.filter((item) => item.category === category),
-    });
+  updateSearchQuery(searchQuery) {
+    this.setState({ searchQuery });
   }
 
   deleteOrder(id) {

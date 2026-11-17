@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import {
   Button,
@@ -15,6 +15,7 @@ import { FaShoppingCart } from "react-icons/fa";
 
 import Order from "./Order";
 import { createOrder, isSupabaseConfigured } from "../lib/supabase";
+import formatPrice from "../lib/formatPrice";
 
 function Header({ orders, onDelete, onChangeAmount, onClear }) {
   const [cartOpen, setCartOpen] = useState(false);
@@ -25,12 +26,10 @@ function Header({ orders, onDelete, onChangeAmount, onClear }) {
   const [checkoutSaving, setCheckoutSaving] = useState(false);
   const [orderCreated, setOrderCreated] = useState(null);
 
-  useEffect(() => {
-    if (orders.length === 0) {
-      setCartOpen(false);
-    }
-  }, [orders.length]);
-
+  const cartItemCount = orders.reduce(
+    (count, item) => count + Number(item.amount),
+    0
+  );
   const result = orders.reduce(
     (previousValue, currentItem) =>
       previousValue + Number(currentItem.amount) * Number(currentItem.price),
@@ -56,12 +55,21 @@ function Header({ orders, onDelete, onChangeAmount, onClear }) {
     }
   };
 
-  const Footer = (
+  const cartSummary = (
     <div className="ResultPanel">
-      <span>
-        Ітого:<span className="value">{new Intl.NumberFormat().format(result)}.грн</span>
-      </span>
-      <Button className="lightBtn " variant="dark" onClick={() => { setCheckoutError(""); setCheckoutOpen(true); }}>
+      <div className="ResultPanel__total">
+        <span>Разом</span>
+        <strong className="value">{formatPrice(result)}</strong>
+      </div>
+      <Button
+        className="lightBtn"
+        variant="dark"
+        disabled={orders.length === 0 || checkoutSaving}
+        onClick={() => {
+          setCheckoutError("");
+          setCheckoutOpen(true);
+        }}
+      >
         Оформити замовлення
       </Button>
     </div>
@@ -94,16 +102,13 @@ function Header({ orders, onDelete, onChangeAmount, onClear }) {
               variant="link"
               className="Circle__box"
               aria-label={
-                orders.length > 0
-                  ? `Відкрити кошик, товарів: ${orders.length}`
-                  : "Кошик порожній"
+                cartItemCount > 0
+                  ? `Відкрити кошик, товарів: ${cartItemCount}`
+                  : "Відкрити порожній кошик"
               }
-              aria-expanded={cartOpen && orders.length > 0}
-              disabled={orders.length === 0}
+              aria-expanded={cartOpen}
               onClick={() => {
-                setCartOpen((previousValue) =>
-                  orders.length > 0 ? !previousValue : false
-                );
+                setCartOpen((previousValue) => !previousValue);
                 setMenuExpanded(false);
               }}
             >
@@ -111,7 +116,7 @@ function Header({ orders, onDelete, onChangeAmount, onClear }) {
                 className={`Shop ${cartOpen ? "active" : ""}`}
                 aria-hidden="true"
               />
-              <span className="Circle">{orders.length}</span>
+              <span className="Circle" aria-hidden="true">{cartItemCount}</span>
             </Button>
             <Navbar.Toggle
               aria-controls="responsive-navbar-nav"
@@ -135,24 +140,74 @@ function Header({ orders, onDelete, onChangeAmount, onClear }) {
       {orderCreated && (
         <div className="alert alert-success mx-auto" role="status" style={{ maxWidth: 520 }}>Замовлення №{orderCreated} збережено. Менеджер зв’яжеться з вами для підтвердження.</div>
       )}
-      <Modal show={checkoutOpen} onHide={() => setCheckoutOpen(false)} centered>
-        <Modal.Header closeButton><Modal.Title>Оформлення замовлення</Modal.Title></Modal.Header>
+      <Modal
+        show={checkoutOpen}
+        onHide={() => setCheckoutOpen(false)}
+        centered
+        className="checkout-modal"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Оформлення замовлення</Modal.Title>
+        </Modal.Header>
         <Modal.Body>
-          <p>У кошику {orders.length} позицій на суму {new Intl.NumberFormat("uk-UA").format(result)} грн.</p>
+          <p>
+            У кошику {orders.length} позицій на суму {formatPrice(result)}.
+          </p>
           <Form onSubmit={submitCheckout}>
-            <Form.Group className="mb-3"><Form.Label>Ваше ім’я</Form.Label><Form.Control required minLength={2} value={customer.name} onChange={(e) => setCustomer({ ...customer, name: e.target.value })} /></Form.Group>
-            <Form.Group className="mb-3"><Form.Label>Телефон</Form.Label><Form.Control required type="tel" minLength={10} placeholder="+380..." value={customer.phone} onChange={(e) => setCustomer({ ...customer, phone: e.target.value })} /></Form.Group>
-            <Form.Group className="mb-3"><Form.Label>Адреса доставки</Form.Label><Form.Control required minLength={5} value={customer.address} onChange={(e) => setCustomer({ ...customer, address: e.target.value })} /></Form.Group>
-            <Form.Group className="mb-3"><Form.Label>Коментар до замовлення</Form.Label><Form.Control as="textarea" rows={2} value={customer.notes} onChange={(e) => setCustomer({ ...customer, notes: e.target.value })} /></Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Ваше ім’я</Form.Label>
+              <Form.Control
+                required
+                minLength={2}
+                autoComplete="name"
+                value={customer.name}
+                onChange={(event) => setCustomer({ ...customer, name: event.target.value })}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Телефон</Form.Label>
+              <Form.Control
+                required
+                type="tel"
+                inputMode="tel"
+                autoComplete="tel"
+                minLength={10}
+                maxLength={24}
+                placeholder="+380..."
+                value={customer.phone}
+                onChange={(event) => setCustomer({ ...customer, phone: event.target.value })}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Адреса доставки</Form.Label>
+              <Form.Control
+                required
+                minLength={5}
+                autoComplete="street-address"
+                value={customer.address}
+                onChange={(event) => setCustomer({ ...customer, address: event.target.value })}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Коментар до замовлення</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={2}
+                maxLength={500}
+                value={customer.notes}
+                onChange={(event) => setCustomer({ ...customer, notes: event.target.value })}
+              />
+            </Form.Group>
             {checkoutError && <div className="alert alert-danger" role="alert">{checkoutError}</div>}
             <Button type="submit" variant="dark" disabled={checkoutSaving || !isSupabaseConfigured}>{checkoutSaving ? "Зберігаємо..." : "Підтвердити замовлення"}</Button>
             {!isSupabaseConfigured && <p className="text-muted small mt-2 mb-0">Потрібно додати ключі Supabase та виконати SQL-скрипт налаштування бази.</p>}
           </Form>
         </Modal.Body>
       </Modal>
-      {cartOpen && orders.length > 0 && (
-        <div className="Shop__body">
-          <div>
+      {cartOpen && (
+        <section className="Shop__body" aria-label="Кошик">
+          {orders.length > 0 ? (
+            <div className="Shop__items">
             {orders.map((item) => (
               <Order
                 key={item.id}
@@ -161,21 +216,29 @@ function Header({ orders, onDelete, onChangeAmount, onClear }) {
                 onChangeAmount={onChangeAmount}
               />
             ))}
-          </div>
-          <Button
-            as={Link}
-            to="/"
-            variant="outline-light"
-            className="w-100 mb-2"
-            onClick={() => {
-              setCartOpen(false);
-              setMenuExpanded(false);
-            }}
-          >
-            Повернутися до вибору страв
-          </Button>
-          {Footer}
-        </div>
+            </div>
+          ) : (
+            <div className="CartEmpty">
+              <h2>Кошик поки порожній</h2>
+              <p>Додайте страви з меню — і вони з’являться тут.</p>
+            </div>
+          )}
+          {orders.length > 0 && (
+            <Button
+              as={Link}
+              to="/"
+              variant="outline-light"
+              className="Shop__menu-link"
+              onClick={() => {
+                setCartOpen(false);
+                setMenuExpanded(false);
+              }}
+            >
+              Повернутися до вибору страв
+            </Button>
+          )}
+          {cartSummary}
+        </section>
       )}
     </>
   );

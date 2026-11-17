@@ -1,25 +1,42 @@
 import PropTypes from "prop-types";
+import { FaPlus, FaShoppingCart } from "react-icons/fa";
+import formatPrice from "../lib/formatPrice";
 
 function Item({ item, onAdd }) {
-  const imageSrc = `${process.env.PUBLIC_URL}/images/${item.img.trim()}`;
+  const imageName = typeof item.img === "string" ? item.img.trim() : "";
+  const imageSrc = imageName
+    ? `${process.env.PUBLIC_URL}/images/${imageName}`
+    : null;
 
   return (
-    <div className="item">
-      <img src={imageSrc} alt="foto" />
-      <h4>{item.title}</h4>
-      <p>{item.desc}</p>
-      <b>{item.price}.грн</b>
-
-      <button
-        type="button"
-        className="item__btn"
-        aria-label={`Додати до кошика: ${item.title}`}
-        onClick={() => onAdd(item)}
-      >
-        +
-      </button>
-      <em>Додати в кошик</em>
-    </div>
+    <article className="item">
+      {imageSrc && (
+        <img
+          className="item__image"
+          src={imageSrc}
+          alt={item.title || "Страва з меню"}
+          loading="lazy"
+          decoding="async"
+        />
+      )}
+      <div className="item__content">
+        <h2>{item.title}</h2>
+        <p>{item.desc || item.description}</p>
+        <div className="item__footer">
+          <strong>{formatPrice(item.price)}</strong>
+          <button
+            type="button"
+            className="item__btn"
+            aria-label={`Додати до кошика: ${item.title}`}
+            onClick={() => onAdd(item)}
+          >
+            <FaPlus aria-hidden="true" />
+            <span>До кошика</span>
+            <FaShoppingCart aria-hidden="true" />
+          </button>
+        </div>
+      </div>
+    </article>
   );
 }
 
@@ -29,6 +46,7 @@ Item.propTypes = {
     title: PropTypes.string,
     img: PropTypes.string,
     desc: PropTypes.string,
+    description: PropTypes.string,
     price: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   }).isRequired,
   onAdd: PropTypes.func.isRequired,
