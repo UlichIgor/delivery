@@ -14,7 +14,10 @@ img.d-block.w-100{
 }
 @include media-breakpoint-down(sm){
   img.d-block.w-100{
-    min-height: 320px;
+    height: clamp(220px, 60vw, 300px);
+    min-height: 0;
+    object-fit: cover;
+    object-position: 70% center;
   } 
 }
 .PosterBlock.carousel-caption {

@@ -1,4 +1,7 @@
 {
   "compile-hero.disable-compile-files-on-did-save-code": false,
-  "files.autoSave": "afterDelay"
+  "files.autoSave": "afterDelay",
+  "workbench.browser.newTabPlacement": "window",
+  "workbench.browser.enableRemoteProxy": true,
+  "workbench.browser.experimentalUserTools.enabled": true
 }

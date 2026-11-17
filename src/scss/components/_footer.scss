@@ -1,8 +1,7 @@
-footer.footer{
-  .container-fluid{
-   padding: 0;  
+footer.footer {
+  .container-fluid {
+    padding: 0;
   }
- 
 }
 
 .footerFirst {
@@ -11,48 +10,68 @@ footer.footer{
   left: 0;
   max-width: 1920px;
   width: 100%;
-  Image{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    min-height: 280px;
-    height: 40%;
- 
-  }
+}
+.footerFirst img {
+  position: absolute;
+  display: block;
+
+
+  
 }
 
-@include media-breakpoint-down(sm){
+@include media-breakpoint-down(sm) {
   .footerFirst {
     min-height: 120px;
   }
 }
-.footerFirst__content{
+.footerFirst__content {
   position: absolute;
   top: 0;
   left: 0;
+  width: min(100%, 380px);
   max-width: 380px;
   display: flex;
   flex-direction: column;
   padding: 5% 0 0 8%;
-
 }
-.footerFirst__content_icons{
+.footerFirst__content_icons {
+  position: relative;
+  top: 0;
+  left: 0;
   display: flex;
   flex-direction: row;
-justify-content: space-around;
-padding: 0 15%;
+  align-items: center;
+  justify-content: flex-start;
+  gap: clamp(12px, 4vw, 24px);
+  padding: 0;
+  z-index: 1;
+}
+.footerFirst__content_icons .iconsLink {
+  display: flex;
+  flex: 0 0 44px;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+}
+.footerFirst__content_icons img {
+  display: block;
+  width: clamp(28px, 8vw, 40px);
+  height: clamp(28px, 8vw, 40px);
+  object-fit: contain;
 }
 
-.footerFirst__content_title h5{
-  font-family: 'Montserrat', sans-serif;
-font-style: normal;
-font-weight: 700;
-font-size: calc(12px + 0.625vw);
-line-height: calc(17px + 4.135417vh);
-font-variant: small-caps;
-color:$white;
-
-
+.footerFirst__content_title h5 {
+  position: relative;
+  top: 0;
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: calc(12px + 0.625vw);
+  line-height: calc(17px + 4.135417vh);
+  font-variant: small-caps;
+  color: $white;
+  z-index: 2;
 }
 .footerBotom {
   position: relative;
@@ -64,22 +83,21 @@ color:$white;
   display: flex;
   align-items: center;
   flex-direction: row;
-      justify-content: space-between;
+  justify-content: space-between;
 }
-@include media-breakpoint-down(sm){
-  .footerBotom{
+@include media-breakpoint-down(sm) {
+  .footerBotom {
     min-height: 30px;
-
   }
 }
 .footerBotom__autor,
-.footerBotom__date{
-  font-family: 'Montserrat', sans-serif;
-font-style: normal;
-font-weight: 400;
-font-size: calc(9px + 0.625vw);
-line-height: 12px;
-letter-spacing: 0.02em;
-color:$black;
-padding: 0 6%;
+.footerBotom__date {
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: calc(9px + 0.625vw);
+  line-height: 12px;
+  letter-spacing: 0.02em;
+  color: $black;
+  padding: 0 6%;
 }

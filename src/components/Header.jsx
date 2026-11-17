@@ -9,6 +9,7 @@ import {
   Modal,
   Form,
 } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import Image from "react-bootstrap/Image";
 import { FaShoppingCart } from "react-icons/fa";
 
@@ -161,6 +162,18 @@ function Header({ orders, onDelete, onChangeAmount, onClear }) {
               />
             ))}
           </div>
+          <Button
+            as={Link}
+            to="/"
+            variant="outline-light"
+            className="w-100 mb-2"
+            onClick={() => {
+              setCartOpen(false);
+              setMenuExpanded(false);
+            }}
+          >
+            Повернутися до вибору страв
+          </Button>
           {Footer}
         </div>
       )}

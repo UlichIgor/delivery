@@ -10,10 +10,15 @@ function Item({ item, onAdd }) {
       <p>{item.desc}</p>
       <b>{item.price}.грн</b>
 
-      <div className="item__btn" onClick={() => onAdd(item)}>
+      <button
+        type="button"
+        className="item__btn"
+        aria-label={`Додати до кошика: ${item.title}`}
+        onClick={() => onAdd(item)}
+      >
         +
-      </div>
-      <em>Добавити в кошик</em>
+      </button>
+      <em>Додати в кошик</em>
     </div>
   );
 }
