@@ -181,11 +181,13 @@ a.Phone.nav-link {
   }
 
   .Categories {
-    justify-content: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
   }
 
   .Categories__items {
-    flex: 1 1 120px;
+    flex: 0 0 auto;
     width: auto;
     min-width: 0;
     padding: 8px 6px;
@@ -241,8 +243,9 @@ a.Phone.nav-link {
   }
 
   .Categories__items {
-    flex-basis: 40%;
+    flex-basis: auto;
     font-size: 13px;
+    white-space: nowrap;
   }
 
   .PosterBlock.carousel-caption {

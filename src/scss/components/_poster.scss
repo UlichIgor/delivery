@@ -125,11 +125,15 @@ button.Poster__btn.btn-light {
   opacity: 0.92;
 }
 
-.PosterBlock .Poster__btn {
-  position: static;
+button.Poster__btn.btn-light {
+  position: relative;
+  z-index: 5;
   width: auto;
   max-width: none;
+  height: auto;
   min-height: 46px;
+  top: auto;
+  left: auto;
   padding: 10px 22px;
   border: 0;
   border-radius: 999px;
@@ -140,8 +144,8 @@ button.Poster__btn.btn-light {
   text-shadow: none;
 }
 
-.PosterBlock .Poster__btn:hover,
-.PosterBlock .Poster__btn:focus-visible {
+button.Poster__btn.btn-light:hover,
+button.Poster__btn.btn-light:focus-visible {
   background: #ff9820;
   color: $black;
 }
@@ -174,14 +178,10 @@ button.Poster__btn.btn-light {
     font-size: 0.88rem;
   }
 
-  .PosterBlock .Poster__btn {
+  button.Poster__btn.btn-light {
     min-height: 40px;
     padding: 8px 16px;
     font-size: 0.85rem;
-  }
-
-  .carousel-indicators {
-    display: flex;
   }
 }
 
@@ -189,20 +189,5 @@ button.Poster__btn.btn-light {
   .carousel-item,
   .carousel-item * {
     transition-duration: 0.01ms !important;
-  }
-}
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-  display: none;
-}
-@include media-breakpoint-down(sm){
-  .carousel-indicators {
-    display: none;
-  }
-}
-
-@include media-breakpoint-down(sm){
-  button.Poster__btn.btn-light{
-    display: none;
   }
 }

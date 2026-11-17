@@ -12,6 +12,19 @@ import Contact from "./pages/Contact";
 import Gallery from "./pages/Gallery";
 import { getProducts, isSupabaseConfigured } from "./lib/supabase";
 
+const CART_STORAGE_KEY = "feast-sushi-cart";
+
+function isValidSavedOrder(item) {
+  return (
+    item &&
+    (typeof item.id === "string" || typeof item.id === "number") &&
+    Number.isFinite(Number(item.price)) &&
+    Number(item.price) >= 0 &&
+    Number.isFinite(Number(item.amount)) &&
+    Number(item.amount) >= 1
+  );
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -249,10 +262,45 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    try {
+      const savedOrders = window.localStorage.getItem(CART_STORAGE_KEY);
+      if (savedOrders) {
+        const parsedOrders = JSON.parse(savedOrders);
+        if (!Array.isArray(parsedOrders) || !parsedOrders.every(isValidSavedOrder)) {
+          throw new Error("Збережений кошик має некоректний формат.");
+        }
+        this.setState({
+          orders: parsedOrders.map((item) => ({
+            ...item,
+            amount: Number(item.amount),
+          })),
+        });
+      }
+    } catch (error) {
+      console.error("Не вдалося відновити кошик:", error);
+    }
+
     if (isSupabaseConfigured) {
       getProducts()
         .then((items) => { if (items && items.length) this.setState({ items }); })
         .catch((error) => console.error("Не вдалося завантажити меню з Supabase:", error));
+    }
+  }
+
+  componentDidUpdate(previousProps, previousState) {
+    if (previousState.orders === this.state.orders) return;
+
+    try {
+      if (this.state.orders.length > 0) {
+        window.localStorage.setItem(
+          CART_STORAGE_KEY,
+          JSON.stringify(this.state.orders)
+        );
+      } else {
+        window.localStorage.removeItem(CART_STORAGE_KEY);
+      }
+    } catch (error) {
+      console.error("Не вдалося зберегти кошик у браузері:", error);
     }
   }
 

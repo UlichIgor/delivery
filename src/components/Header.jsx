@@ -17,6 +17,17 @@ import Order from "./Order";
 import { createOrder, isSupabaseConfigured } from "../lib/supabase";
 import formatPrice from "../lib/formatPrice";
 
+function getPositionLabel(count) {
+  const lastDigit = count % 10;
+  const lastTwoDigits = count % 100;
+
+  if (lastDigit === 1 && lastTwoDigits !== 11) return "позиція";
+  if ([2, 3, 4].includes(lastDigit) && (lastTwoDigits < 12 || lastTwoDigits > 14)) {
+    return "позиції";
+  }
+  return "позицій";
+}
+
 function Header({ orders, onDelete, onChangeAmount, onClear }) {
   const [cartOpen, setCartOpen] = useState(false);
   const [menuExpanded, setMenuExpanded] = useState(false);
@@ -93,7 +104,7 @@ function Header({ orders, onDelete, onChangeAmount, onClear }) {
               height={118}
               width={241}
               className="d-inline-block align-center"
-              alt="Logo"
+              alt="Feast Sushi"
             />
           </Navbar.Brand>
           <div className="site-navbar__controls">
@@ -151,7 +162,8 @@ function Header({ orders, onDelete, onChangeAmount, onClear }) {
         </Modal.Header>
         <Modal.Body>
           <p>
-            У кошику {orders.length} позицій на суму {formatPrice(result)}.
+            У кошику {orders.length} {getPositionLabel(orders.length)} на суму{" "}
+            {formatPrice(result)}.
           </p>
           <Form onSubmit={submitCheckout}>
             <Form.Group className="mb-3">
