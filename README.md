@@ -125,3 +125,40 @@ npm run deploy
 **Важливо:** не додавайте до React-застосунку `service_role` або secret key. У браузері дозволено використовувати лише publishable/anon key; доступ обмежується політиками RLS.
 
 Поки URL і публічний ключ не задані, сайт використовує локальний резервний каталог, а відгуки продовжують відкривати WhatsApp. Після налаштування ключів відгуки зберігаються в Supabase, каталог завантажується з таблиці `products`, а форма кошика створює записи в `orders`, `order_items` і `customers`.
+
+### Telegram-сповіщення про нові замовлення
+
+Сповіщення надсилає Supabase Edge Function після створення запису в `orders`. Токен бота зберігається лише в секретах Supabase і не додається до React-застосунку.
+
+1. Створіть бота через [@BotFather](https://t.me/BotFather), відкрийте з ним чат і надішліть `/start`. Додайте бота до групи замовлень, якщо повідомлення мають надходити в групу.
+2. Отримайте ID чату локально у PowerShell. Скрипт попросить токен прихованим вводом і виведе лише ID чатів із новими повідомленнями бота:
+
+   ```powershell
+   $secureToken = Read-Host "Токен Telegram-бота" -AsSecureString
+   $pointer = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($secureToken)
+   try {
+     $token = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($pointer)
+     $updates = Invoke-RestMethod -Uri "https://api.telegram.org/bot$token/getUpdates"
+     $updates.result | ForEach-Object { $_.message.chat.id }
+   } catch {
+     Write-Error "Не вдалося отримати chat ID. Перевірте токен і надішліть /start боту."
+   } finally {
+     [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($pointer)
+     $token = $null
+   }
+   ```
+
+   Для групи спершу додайте бота та надішліть у групу повідомлення; її ID зазвичай від’ємний.
+3. У **Supabase → Edge Functions → Secrets** додайте `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` і `ORDER_WEBHOOK_SECRET`. Згенеруйте останній локально командою `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`; задайте те саме значення як секрет функції та заголовок webhook. Не зберігайте секрети у файлах проєкту.
+4. Установіть Supabase CLI, увійдіть та прив’яжіть проєкт, потім опублікуйте функцію:
+
+   ```bash
+   supabase login
+   supabase link --project-ref hmtqyvyvvcujwsdasvcf
+   supabase functions deploy notify-order-telegram
+   ```
+
+5. У **Supabase → Database → Webhooks** створіть webhook для `public.orders`, подія `INSERT`, URL `https://hmtqyvyvvcujwsdasvcf.supabase.co/functions/v1/notify-order-telegram`. Додайте заголовок `x-order-webhook-secret` із тим самим значенням, що й `ORDER_WEBHOOK_SECRET`.
+6. Не надсилайте токен бота в чат і не додавайте його до коду чи налаштувань React-застосунку.
+
+Функція перевіряє секрет вебхука й отримує дані замовлення на сервері. Для цього потрібного доступу до таблиць вона використовує Supabase `service_role` із серверного середовища; цей ключ не потрібно додавати в код або секрети браузера.
