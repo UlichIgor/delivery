@@ -30,6 +30,7 @@ function getPositionLabel(count) {
 
 function Header({ orders, onDelete, onChangeAmount, onClear }) {
   const [cartOpen, setCartOpen] = useState(false);
+  const [cartClosing, setCartClosing] = useState(false);
   const [menuExpanded, setMenuExpanded] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [customer, setCustomer] = useState({ name: "", phone: "", address: "", notes: "" });
@@ -46,6 +47,17 @@ function Header({ orders, onDelete, onChangeAmount, onClear }) {
       previousValue + Number(currentItem.amount) * Number(currentItem.price),
     0
   );
+
+  const handleDeleteOrder = (id) => {
+    if (orders.length === 1) setCartClosing(true);
+    onDelete(id);
+  };
+
+  const finishCartClosing = (event) => {
+    if (event.target !== event.currentTarget || !cartClosing) return;
+    setCartOpen(false);
+    setCartClosing(false);
+  };
 
   const submitCheckout = async (event) => {
     event.preventDefault();
@@ -75,7 +87,7 @@ function Header({ orders, onDelete, onChangeAmount, onClear }) {
       <Button
         className="lightBtn"
         variant="dark"
-        disabled={orders.length === 0 || checkoutSaving}
+        disabled={orders.length === 0 || checkoutSaving || cartClosing}
         onClick={() => {
           setCheckoutError("");
           setCheckoutOpen(true);
@@ -119,6 +131,7 @@ function Header({ orders, onDelete, onChangeAmount, onClear }) {
               }
               aria-expanded={cartOpen}
               onClick={() => {
+                setCartClosing(false);
                 setCartOpen((previousValue) => !previousValue);
                 setMenuExpanded(false);
               }}
@@ -217,14 +230,19 @@ function Header({ orders, onDelete, onChangeAmount, onClear }) {
         </Modal.Body>
       </Modal>
       {cartOpen && (
-        <section className="Shop__body" aria-label="Кошик">
+        <section
+          className={`Shop__body${cartClosing ? " Shop__body--closing" : ""}`}
+          aria-label="Кошик"
+          aria-hidden={cartClosing}
+          onAnimationEnd={finishCartClosing}
+        >
           {orders.length > 0 ? (
             <div className="Shop__items">
             {orders.map((item) => (
               <Order
                 key={item.id}
                 item={item}
-                onDelete={onDelete}
+                onDelete={handleDeleteOrder}
                 onChangeAmount={onChangeAmount}
               />
             ))}

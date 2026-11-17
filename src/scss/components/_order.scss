@@ -270,6 +270,24 @@ button.lightBtn {
   border: 1px solid #403a31;
 }
 
+.Shop__body--closing {
+  animation: cart-fade-out 240ms ease forwards;
+  pointer-events: none;
+}
+
+@keyframes cart-fade-out {
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .Shop__body--closing {
+    animation-duration: 0.01ms;
+  }
+}
+
 .Shop__items {
   display: flex;
   flex-direction: column;
