@@ -45,3 +45,20 @@ WHERE email = 'YOUR_ADMIN_EMAIL';
 Якщо бачите помилку доступу до таблиці, перевірте, чи виконана міграція та чи роль користувача дорівнює `admin`.
 
 **Безпека:** не додавайте `service_role` або `sb_secret` ключі до React-змінних середовища. Для браузера використовується лише publishable/anon key; обмеження доступу забезпечують RLS-політики.
+
+
+## 5. Buyer accounts and order history
+
+Apply the next migration after the admin migration:
+
+`supabase/migrations/202611190002_buyer_roles_and_order_history.sql`
+
+It assigns the `buyer` role to new customer accounts (and existing accounts that do not already have a role), adds a secure owner link to orders created while signed in, and adds RLS policies so buyers can read only their own orders and order items. Only admins can update order status or delete orders.
+
+Customers can register or sign in at:
+
+`https://ulichigor.github.io/delivery/#/account`
+
+The normal checkout remains available without registration. Guest orders have no account owner and are visible only to admins. Orders made before a buyer account is used are not automatically attached to that account by phone number; this avoids exposing someone else's historical orders without identity verification.
+
+After applying the migration, sign out and sign in again so Supabase Auth refreshes the JWT with the `buyer` role. Existing admin accounts keep their `admin` role.
