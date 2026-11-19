@@ -85,4 +85,13 @@ for update to authenticated
 using ((auth.jwt() -> 'app_metadata' ->> 'role') = 'admin')
 with check ((auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
 
-grant select on public.orders, public.order_items to authenticated;
+-- Restrict direct table privileges as well as RLS. Order creation remains available
+-- through the SECURITY DEFINER submit_order RPC, including anonymous guest checkout.
+revoke all on public.orders from anon, authenticated;
+grant select, update (status), delete on public.orders to authenticated;
+
+revoke all on public.customers from anon, authenticated;
+grant select on public.customers to authenticated;
+
+revoke all on public.order_items from anon, authenticated;
+grant select on public.order_items to authenticated;
