@@ -51,3 +51,23 @@ export async function createOrder({ name, phone, address, notes, items }) {
   if (error) throw error;
   return data;
 }
+
+
+export async function getAdminOrders() {
+  if (!supabase) throw new Error("Supabase ще не налаштовано.");
+  const { data, error } = await supabase
+    .from("orders")
+    .select("id,created_at,status,total,delivery_address,notes,customer:customers(name,phone),items:order_items(id,product_title,unit_price,quantity,line_total)")
+    .order("created_at", { ascending: false })
+    .limit(100);
+  if (error) throw error;
+  return data || [];
+}
+
+export async function updateAdminOrderStatus(orderId, status) {
+  if (!supabase) throw new Error("Supabase ще не налаштовано.");
+  const allowed = ["new", "confirmed", "preparing", "delivering", "completed", "cancelled"];
+  if (!allowed.includes(status)) throw new Error("Невідомий статус замовлення.");
+  const { error } = await supabase.from("orders").update({ status }).eq("id", orderId);
+  if (error) throw error;
+}
