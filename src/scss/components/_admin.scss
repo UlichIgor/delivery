@@ -1,0 +1,19 @@
+.admin-page {
+  min-height: 65vh; color: #f8f5ef; background: #111;
+  padding-left: clamp(16px, 3vw, 40px); padding-right: clamp(16px, 3vw, 40px);
+  .text-muted { color: #aaa !important; }
+  .admin-login-card, .admin-orders-card, .admin-stat { color: #222; border: 1px solid #dedbd5; border-radius: 14px; overflow: hidden; }
+  .admin-login-card { background: #fff; }
+  .admin-eyebrow { color: #b58a4b; font-size: 12px; font-weight: 800; letter-spacing: .18em; }
+  .admin-stat .card-body { display: flex; flex-direction: column; gap: 8px; }
+  .admin-stat span { color: #666; font-size: 13px; }
+  .admin-stat strong { color: #171717; font-size: 30px; }
+  .admin-orders-card .card-header { background: #f4f1eb; }
+  .admin-orders-table { min-width: 900px; font-size: 13px; }
+  .admin-orders-table th { white-space: nowrap; background: #f8f6f2; }
+  .admin-orders-table td { vertical-align: middle; }
+  .admin-item-list { min-width: 180px; padding-left: 18px; margin: 0; }
+  .admin-item-list li { margin-bottom: 4px; }
+  .admin-item-list span { color: #666; white-space: nowrap; }
+  a { color: #9b6b2f; }
+}
