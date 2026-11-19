@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useCallback, useEffect, useState } from "react";
 import { Alert, Badge, Button, Card, Col, Container, Form, Row, Spinner, Table } from "react-bootstrap";
 import { supabase, getBuyerOrderHistory } from "../lib/supabase";

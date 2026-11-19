@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // eslint-disable-next-line no-unused-vars
 import React from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
@@ -45,7 +46,8 @@ export default function About() {
     <main className="feast-about">
       <style>{`
         .feast-about { color: #f7f4ef; background: #111; overflow: hidden; }
-        .feast-about .about-hero { position: relative; min-height: 440px; display: flex; align-items: center; background: linear-gradient(90deg, rgba(8,8,8,.94), rgba(8,8,8,.72), rgba(8,8,8,.25)), url("${process.env.PUBLIC_URL}/images/poster1.webp") center/cover; }
+        .feast-about .about-hero { position: relative; min-height: 440px; display: flex; align-items: center; background: linear-gradient
+        (90deg, rgba(8,8,8,.94), rgba(8,8,8,.72), rgba(8,8,8,.25)), url("${process.env.PUBLIC_URL}/images/poster1.webp") center/cover; }
         .feast-about .hero-copy { max-width: 720px; padding: 76px 0; animation: feast-rise .8s ease both; }
         .feast-about .eyebrow { color: #d9a441; letter-spacing: .22em; text-transform: uppercase; font-size: .78rem; font-weight: 700; }
         .feast-about h1 { font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1.02; font-weight: 800; margin: 18px 0; }
@@ -116,6 +118,7 @@ export default function About() {
             <Col lg={6}>
               <div className="rounded-4 overflow-hidden shadow-lg">
                 <img
+                  // eslint-disable-next-line no-undef
                   src={`${process.env.PUBLIC_URL}/images/grand-set-filadelfii.webp`}
                   alt="Асорті суші та ролів"
                   className="w-100"

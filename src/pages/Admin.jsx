@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useCallback, useEffect, useState } from "react";
 import { Alert, Badge, Button, Card, Col, Container, Form, Row, Spinner, Table } from "react-bootstrap";
 import { supabase, getAdminOrders, updateAdminOrderStatus, deleteAdminOrder } from "../lib/supabase";
