@@ -71,3 +71,20 @@ export async function updateAdminOrderStatus(orderId, status) {
   const { error } = await supabase.from("orders").update({ status }).eq("id", orderId);
   if (error) throw error;
 }
+
+
+export async function getBuyerOrderHistory() {
+  if (!supabase) throw new Error("Supabase ще не налаштовано.");
+  const { data, error } = await supabase
+    .from("orders")
+    .select("id,created_at,status,total,delivery_address,notes,customer_name,customer_phone,items:order_items(id,product_title,unit_price,quantity,line_total)")
+    .order("created_at", { ascending: false });
+  if (error) throw error;
+  return data || [];
+}
+
+export async function deleteAdminOrder(orderId) {
+  if (!supabase) throw new Error("Supabase ще не налаштовано.");
+  const { error } = await supabase.from("orders").delete().eq("id", orderId);
+  if (error) throw error;
+}
