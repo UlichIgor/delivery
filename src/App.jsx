@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Blog from "./pages/Blog";
 import Contact from "./pages/Contact";
+import Admin from "./pages/Admin";
 import Gallery from "./pages/Gallery";
 import { getProducts, isSupabaseConfigured } from "./lib/supabase";
 
@@ -358,6 +359,7 @@ class App extends React.Component {
           <Route exact path="/gallery" component={Gallery} />
           <Route exact path="/blog" component={Blog} />
           <Route exact path="/contact" component={Contact} />
+          <Route exact path="/admin" component={Admin} />
         </Switch>
         <Footer />
       </Router>
