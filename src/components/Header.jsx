@@ -154,6 +154,7 @@ function Header({ orders, onDelete, onChangeAmount, onClear }) {
               <NavLink href="#/gallery">Зона доставки</NavLink>
               <NavLink href="#/blog">Залишити відгук</NavLink>
               <NavLink href="#/contact">Контакти</NavLink>
+              <NavLink href="#/account">Мій кабінет</NavLink>
               <NavLink href="tel:+380688744734" className="Phone">
                 +38 (068) 874-47-34
               </NavLink>
