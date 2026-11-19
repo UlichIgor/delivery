@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Alert, Badge, Button, Card, Col, Container, Form, Row, Spinner, Table } from "react-bootstrap";
-import { supabase, getAdminOrders, updateAdminOrderStatus } from "../lib/supabase";
+import { supabase, getAdminOrders, updateAdminOrderStatus, deleteAdminOrder } from "../lib/supabase";
 
 const STATUSES = {
   new: "Нове", confirmed: "Підтверджено", preparing: "Готується",
@@ -60,6 +60,17 @@ export default function Admin() {
     const { error: logoutError } = await supabase.auth.signOut();
     if (logoutError) setError(logoutError.message);
   };
+  const removeOrder = async (order) => {
+    if (!window.confirm("Видалити замовлення №" + order.id + "? Цю дію не можна скасувати.")) return;
+    setSavingId(order.id); setError(""); setNotice("");
+    try {
+      await deleteAdminOrder(order.id);
+      setOrders((current) => current.filter((item) => item.id !== order.id));
+      setNotice("Замовлення №" + order.id + " видалено.");
+    } catch (e) { setError(e.message || "Не вдалося видалити замовлення."); }
+    finally { setSavingId(null); }
+  };
+
   const changeStatus = async (id, status) => {
     setSavingId(id); setError(""); setNotice("");
     try {
@@ -113,7 +124,7 @@ export default function Admin() {
               <td><ul className="admin-item-list">{(order.items || []).map((item) => <li key={item.id}>{item.product_title} × {item.quantity} <span>{money(item.line_total)}</span></li>)}</ul></td>
               <td>{order.delivery_address}<div className="small text-muted">{order.notes}</div></td>
               <td><strong>{money(order.total)}</strong></td>
-              <td><Badge bg={VARIANTS[order.status] || "secondary"} className="mb-2">{STATUSES[order.status] || order.status}</Badge><Form.Select size="sm" aria-label={"Статус замовлення " + order.id} value={order.status} disabled={savingId === order.id} onChange={(e) => changeStatus(order.id, e.target.value)}>{Object.entries(STATUSES).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</Form.Select></td>
+              <td><Badge bg={VARIANTS[order.status] || "secondary"} className="mb-2">{STATUSES[order.status] || order.status}</Badge><Form.Select size="sm" className="mb-2" aria-label={"Статус замовлення " + order.id} value={order.status} disabled={savingId === order.id} onChange={(e) => changeStatus(order.id, e.target.value)}>{Object.entries(STATUSES).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</Form.Select><Button size="sm" variant="outline-danger" disabled={savingId === order.id} onClick={() => removeOrder(order)}>Видалити</Button></td>
             </tr>)}</tbody>
           </Table></div>
         )}
