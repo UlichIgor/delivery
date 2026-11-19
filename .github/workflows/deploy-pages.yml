@@ -17,12 +17,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
 
       - name: Install dependencies
@@ -33,7 +33,7 @@ jobs:
           REACT_APP_SUPABASE_ANON_KEY: ${{ secrets.REACT_APP_SUPABASE_ANON_KEY }}
         run: |
           if [ -z "$REACT_APP_SUPABASE_ANON_KEY" ]; then
-            echo "::error::Add the repository Actions secret REACT_APP_SUPABASE_ANON_KEY before deploying."
+            echo "::error::Repository Actions secret REACT_APP_SUPABASE_ANON_KEY is missing or unavailable to this workflow."
             exit 1
           fi
 
